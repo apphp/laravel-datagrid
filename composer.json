@@ -1,0 +1,42 @@
+{
+    "name": "apphp/datagrid",
+    "description": "DataGrid helpers for Laravel Framework Applications",
+    "keywords": ["apphp", "laravel", "laravel-package", "laravel6-package", "laravel6", "datagrid helpers", "filter helpers", "pagination helpers"],
+    "homepage": "https://apphp.com",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Samuel Akopyan",
+            "email": "admin@apphp.com",
+            "homepage": "https://apphp.com/php-framework",
+            "role": "Founder and project lead"
+        }
+    ],
+    "require": {
+        "php": ">=7.0.0",
+        "illuminate/support": "~5.0|^6.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.1"
+    },
+    "autoload": {
+        "psr-0": {
+            "Apphp\\DataGrid": "src/"
+        },
+        "files": [
+
+        ]
+    },
+    "minimum-stability": "stable",
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Apphp\\DataGrid\\DataGridServiceProvider"
+            ],
+            "aliases": {
+                "Filter": "Apphp\\DataGrid\\Filter",
+                "Pagination": "Apphp\\DataGrid\\Pagination"
+            }
+        }
+    }
+}
