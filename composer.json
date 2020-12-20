@@ -1,6 +1,6 @@
 {
     "name": "apphp/datagrid",
-    "description": "DataGrid helpers for building CRUDs in Laravel Framework Applications",
+    "description": "DataGrid helpers for easy creating CRUD in Laravel Framework Applications",
     "keywords": ["apphp", "laravel", "laravel-package", "laravel6-package", "laravel6", "datagrid helpers", "filter helpers", "pagination helpers", "laravel-crud"],
     "homepage": "https://apphp.com",
     "license": "MIT",
