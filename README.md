@@ -34,4 +34,69 @@ classes based on them.
 <link rel="stylesheet" href="//getbootstrap.com/docs/4.0/dist/css/bootstrap.min.css">
 ```
 
+## Usage in Controllers  
 
+### 1. Import classes
+```php 
+use Apphp\DataGrid\Pagination;
+use Apphp\DataGrid\Filter;
+```
+
+### 2. Define filters and filter field types
+```php
+$filters      = [
+    'act' => ['type' => 'equals', 'value' => 'search'],
+    'email'    => ['title' => 'Email', 'type' => 'string', 'compareType' => '%like%', 'validation' => ['maxLength' => 150]],
+    'name'     => ['title' => 'Name', 'type' => 'string', 'compareType' => '%like%'],
+    'username' => ['title' => 'Username', 'type' => 'string', 'compareType' => '%like%'],
+    'user_id'  => ['title' => 'ID', 'type' => 'integer', 'compareType' => '=', 'validation' => ['max' => 10000000]],
+];
+```
+
+### 3. Handle filters and prepare SQL builder
+```php
+$query = User::sortable()->orderByDesc('user_id');
+$request = request(); // or get it via function param, like foo(Request $request){...}
+$url = route('backend.users.submitRote');
+$cancelUrl = $url;
+
+$filter       = Filter::init($query, $request, $filters, $url, $cancelUrl, 'collapsed');
+$filter       = $filter::filter();
+$filterFields = $filter::getFilterFields();
+$query        = $filter::getQuery();
+```
+
+### 4. Sorting
+```php 
+$sort      = $request->get('sort');
+$direction = $request->get('direction');
+```
+
+### 5. Pagination
+```php 
+$pagination       = Pagination::init($query, 20, $sort, $direction, $filterFields)::paginate();
+$paginationFields = $pagination::getPaginationFields();
+$users            = $pagination::getRecords();
+```
+
+### 6. Rendering view
+```php
+return view('backend.users.mainView', compact('users', 'filterFields', 'paginationFields'));
+```
+
+## Usage in View files 
+```html
+<script>
+    {!! \Apphp\DataGrid\Filter::renderJs() !!}
+</script>
+
+{!! \Apphp\DataGrid\Filter::renderFields() !!}
+    
+    <!-- YOUR TABLE WITH RECORDS DATA -->
+        @foreach ($users as $user)
+    
+        @endforeach
+    <!-- YOUR TABLE WITH RECORDS DATA -->
+
+{!! \Apphp\DataGrid\Pagination::renderLinks() !!}
+```
