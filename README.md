@@ -24,7 +24,7 @@ Copyright © 2020 [ApPHP](https://www.apphp.com/).
 Begin by pulling in the package through Composer.
 
 ```bash
-composer require apphp/datagrid
+composer require apphp/laravel-datagrid
 ```
 
 Next, make sure you connected Bootstrap. You may either pull in the Bootstrap's CSS within your HTML or layout file, or write your own CSS 
