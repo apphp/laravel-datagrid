@@ -1,3 +1,8 @@
+Version 0.1.0 -
+----------------------------
+- New: package renamed into apphp/laravel-datagrid
+- New: added DataGridServiceProvider
+
 
 Version 0.0.1 - Dec 20, 2020 (Initial release)
 ----------------------------
