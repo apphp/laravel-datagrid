@@ -14,9 +14,21 @@ class DataGridServiceProvider extends ServiceProvider
      */
     protected $defer = false;
 
+
+    /**
+     * Bootstrap the application events
+     * @return void
+     */
+    public function boot()
+    {
+        // Prepare dir to work in Windows and Linux environments
+        $dir = rtrim(__DIR__, '/');
+
+        $this->loadViewsFrom($dir.'/../views', 'datagrid');
+    }
+
     /**
      * Register service provider
-     *
      * @return void
      */
     public function register()
@@ -36,15 +48,5 @@ class DataGridServiceProvider extends ServiceProvider
                 return $this->app->make('Apphp\DataGrid\Pagination');
             }
         );
-    }
-
-    /**
-     * Bootstrap the application events
-     *
-     * @return void
-     */
-    public function boot()
-    {
-
     }
 }
