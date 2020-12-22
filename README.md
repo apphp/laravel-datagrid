@@ -100,3 +100,6 @@ return view('backend.users.mainView', compact('users', 'filterFields', 'paginati
 
 {!! \Apphp\DataGrid\Pagination::renderLinks() !!}
 ```
+
+## Example
+![Open filter](https://raw.githubusercontent.com/apphp/laravel-datagrid/master/images/filter-opened.png)
