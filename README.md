@@ -55,7 +55,8 @@ $filters      = [
 
 ### 3. Handle filters and prepare SQL builder
 ```php
-$query = User::sortable()->orderByDesc('user_id');
+// $query = User::sortable()->orderByDesc('id');
+$query = User::orderByDesc('id');
 $request = request(); // or get it via function param, like foo(Request $request){...}
 $url = route('backend.users.submitRote');
 $cancelUrl = $url;
