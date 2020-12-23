@@ -103,4 +103,9 @@ return view('backend.users.mainView', compact('users', 'filterFields', 'paginati
 ```
 
 ## Example
-![Open filter](https://raw.githubusercontent.com/apphp/laravel-datagrid/master/images/filter-opened.png)
+### Collapsed filter
+
+![Collapsed filter](https://raw.githubusercontent.com/apphp/laravel-datagrid/master/images/filter-collapsed.png)
+
+### Expanded filter
+![Open expanded](https://raw.githubusercontent.com/apphp/laravel-datagrid/master/images/filter-expanded.png)
