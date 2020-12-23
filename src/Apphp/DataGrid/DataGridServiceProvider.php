@@ -35,18 +35,16 @@ class DataGridServiceProvider extends ServiceProvider
     {
         ///$this->app->bind();
 
-        $this->app->singleton(
-            'filter',
-            function () {
-                return $this->app->make('Apphp\DataGrid\Filter');
-            }
-        );
+        $this->app->singleton('filter', function () {
+            return $this->app->make('Apphp\DataGrid\Filter');
+        });
 
-        $this->app->singleton(
-            'pagination',
-            function () {
-                return $this->app->make('Apphp\DataGrid\Pagination');
-            }
-        );
+        $this->app->singleton('pagination', function () {
+            return $this->app->make('Apphp\DataGrid\Pagination');
+        });
+
+        $this->app->singleton('messages', function () {
+            return $this->app->make('Apphp\DataGrid\Messages');
+        });
     }
 }
