@@ -102,10 +102,61 @@ return view('backend.users.mainView', compact('users', 'filterFields', 'paginati
 {!! \Apphp\DataGrid\Pagination::renderLinks() !!}
 ```
 
-## Example
+## Examples
+
+### Controller code (full example)
+```php
+public function index(Request $request)
+{
+    // Additional data
+    $roles    = Role::rolesList();
+    $statuses = User::statusesList();
+    $actives  = [0 => 'Not Active', 1 => 'Active'];
+
+    // Define filters and filter field types
+    $filters      = [
+        'act' => ['type' => 'equals', 'value' => 'search'],
+    
+        'email'    => ['title' => 'Email', 'type' => 'string', 'compareType' => '%like%', 'validation' => ['maxLength' => 150]],
+        'name'     => ['title' => 'Name', 'type' => 'string', 'compareType' => '%like%'],
+        'username' => ['title' => 'Username', 'type' => 'string', 'compareType' => '%like%'],
+        'user_id'  => ['title' => 'ID', 'type' => 'integer', 'compareType' => '=', 'validation' => ['max' => 10000000]],
+    
+        'role'       => ['title' => 'Role', 'type' => 'user_role', 'compareType' => '', 'source' => $roles],
+        'status'     => ['title' => 'Status', 'type' => 'user_status', 'compareType' => '', 'source' => $statuses],
+        'active'     => ['title' => 'Active', 'type' => 'user_active', 'compareType' => '', 'source' => $actives],
+    
+        'created_at'    => ['title' => 'Created At', 'type' => 'date', 'compareType' => 'like%'],
+        'last_logged_at' => ['title' => 'Last Login', 'type' => 'date', 'compareType' => 'like%'],
+    ];
+    
+    $query = User::orderByDesc('id');
+    
+    // Handle filters and prepare SQL query
+    $filter       = Filter::init($query, $request, $filters, route('users.list'), route('users.list'), 'collapsed');
+    $filter       = $filter::filter();
+    $filterFields = $filter::getFilterFields();
+    $query        = $filter::getQuery();
+    
+    // Sorting
+    $sort      = $request->get('sort');
+    $direction = $request->get('direction');
+    
+    // Pagination
+    $pagination       = Pagination::init($query, 20, $sort, $direction, $filterFields)::paginate();
+    $paginationFields = $pagination::getPaginationFields();
+    $users            = $pagination::getRecords();
+    
+    return view('users.list', compact('users', 'filterFields', 'paginationFields'));
+}
+```
+
 ### Collapsed filter
 
 ![Collapsed filter](https://raw.githubusercontent.com/apphp/laravel-datagrid/master/images/filter-collapsed.png)
 
 ### Expanded filter
-![Open expanded](https://raw.githubusercontent.com/apphp/laravel-datagrid/master/images/filter-expanded.png)
+![Expanded filter](https://raw.githubusercontent.com/apphp/laravel-datagrid/master/images/filter-expanded.png)
+
+### Pagination
+![Pagination](https://raw.githubusercontent.com/apphp/laravel-datagrid/master/images/paganation.png)
