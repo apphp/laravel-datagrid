@@ -1,3 +1,8 @@
+Version 0.3.0 -
+----------------------------
+- Eng: class Messages renamed into Message
+
+
 Version 0.2.0 - Dec 23, 2020
 ----------------------------
 - New: added view files

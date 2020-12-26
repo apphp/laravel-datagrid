@@ -43,8 +43,8 @@ class DataGridServiceProvider extends ServiceProvider
             return $this->app->make('Apphp\DataGrid\Pagination');
         });
 
-        $this->app->singleton('messages', function () {
-            return $this->app->make('Apphp\DataGrid\Messages');
+        $this->app->singleton('message', function () {
+            return $this->app->make('Apphp\DataGrid\Message');
         });
     }
 }

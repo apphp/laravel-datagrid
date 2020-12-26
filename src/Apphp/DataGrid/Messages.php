@@ -5,14 +5,14 @@
  *
  *  Usage:
  *
- *  {!! \Apphp\DataGrid\Messages::warning('Sorry, no records were found. Please adjust your search criteria and try again.') !!}
+ *  {!! \Apphp\DataGrid\Message::warning('Sorry, no records were found. Please adjust your search criteria and try again.') !!}
  *
  */
 
 namespace Apphp\DataGrid;
 
 
-class Messages
+class Message
 {
     /**
      * Return message
