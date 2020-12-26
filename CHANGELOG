@@ -1,5 +1,6 @@
-Version 0.3.0 -
+Version 0.3.0 - Dec 26, 2020
 ----------------------------
+- New: added "jenssegers/agent": "^2.6" dependency for mobile view support
 - Eng: class Messages renamed into Message
 - Eng: updated README examples
 

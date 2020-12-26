@@ -19,7 +19,7 @@ namespace Apphp\DataGrid;
 
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
-///use Jenssegers\Agent\Agent;
+use Jenssegers\Agent\Agent;
 
 
 class Pagination
@@ -167,11 +167,12 @@ class Pagination
      */
     public static function renderLinks()
     {
-        //$agent = new Agent();
         $links = self::$records->appends(array_merge(array_filter(self::$filterFields), ['sort' => self::$sort, 'direction' => self::$direction]));
-        //if ($agent->isMobile()) {
-        //    $links->onEachSide(1);
-        //}
+
+        $agent = new Agent();
+        if ($agent->isMobile()) {
+            $links->onEachSide(1);
+        }
 
         $output = '
         <div class="pt-1 d-flex flex-fill row">

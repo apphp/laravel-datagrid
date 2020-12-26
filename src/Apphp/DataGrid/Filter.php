@@ -53,7 +53,7 @@
 namespace Apphp\DataGrid;
 
 use Illuminate\Http\Request;
-//use Jenssegers\Agent\Agent;
+use Jenssegers\Agent\Agent;
 
 
 class Filter
@@ -118,11 +118,10 @@ class Filter
             self::setFieldsInRow($fieldsInRow);
         }
 
-//        //$agent = new Agent();
-//        if ($agent->isMobile()) {
-//            self::setMode('collapsed');
-//        } else
-        if ( ! empty($initMode)) {
+        $agent = new Agent();
+        if ($agent->isMobile()) {
+            self::setMode('collapsed');
+        } elseif ( ! empty($initMode)) {
             self::setMode($initMode);
         }
 
