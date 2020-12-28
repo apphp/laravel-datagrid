@@ -1,5 +1,6 @@
 Version 0.3.1 - Dec 26, 2020
 ----------------------------
+- Enh: code refactoring in DataGridServiceProvider
 - Fix: class Message comply with psr-0 autoloading standard
 
 

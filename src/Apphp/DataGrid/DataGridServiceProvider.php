@@ -8,12 +8,17 @@ use Illuminate\Support\ServiceProvider;
 class DataGridServiceProvider extends ServiceProvider
 {
     /**
-     * Indicates if loading of this provider is deferred
-     *
-     * @var bool
+     * @var string
      */
-    protected $defer = false;
+    private $dir = '';
 
+    public function __construct($app)
+    {
+        parent::__construct($app);
+
+        // Prepare dir to work in Windows and Linux environments
+        $this->dir = rtrim(__DIR__, '/');
+    }
 
     /**
      * Bootstrap the application events
@@ -21,10 +26,7 @@ class DataGridServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // Prepare dir to work in Windows and Linux environments
-        $dir = rtrim(__DIR__, '/');
-
-        $this->loadViewsFrom($dir.'/../views', 'datagrid');
+        $this->loadViewsFrom($this->dir.'/../views', 'datagrid');
     }
 
     /**
