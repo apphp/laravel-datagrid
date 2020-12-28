@@ -1,7 +1,11 @@
-Version 0.3.1 - Dec 26, 2020
+Version 0.4.x -
 ----------------------------
 - Enh: code refactoring in DataGridServiceProvider
 - Enh: HTML code extracted to view blade files
+
+
+Version 0.3.1 - Dec 26, 2020
+----------------------------
 - Fix: class Message comply with psr-0 autoloading standard
 
 
