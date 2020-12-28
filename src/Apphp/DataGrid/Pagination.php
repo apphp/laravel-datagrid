@@ -163,29 +163,28 @@ class Pagination
 
     /**
      * Render pagination links
+     *
      * @return string
      */
     public static function renderLinks()
     {
-        $links = self::$records->appends(array_merge(array_filter(self::$filterFields), ['sort' => self::$sort, 'direction' => self::$direction]));
+        $links = self::$records->appends(
+            array_merge(array_filter(self::$filterFields), ['sort' => self::$sort, 'direction' => self::$direction])
+        );
 
         $agent = new Agent();
         if ($agent->isMobile()) {
             $links->onEachSide(1);
         }
 
-        $output = '
-        <div class="pt-1 d-flex flex-fill row">
-            <div class="flex-fill col-12 col-lg-8">
-                '.$links->links().'
-            </div>
-            <div class="flex-fill text-lg-right col-12 col-lg-4">
-                Shows: '.self::$paginationFields['fromRecord'].' - '.self::$paginationFields['toRecord'].'
-                from '.self::$records->total().'
-            </div>
-        </div>';
-
-        return $output;
+        return view(
+            'datagrid::pagination',
+            [
+                'links' => $links,
+                'paginationFields' => self::$paginationFields,
+                'total' => self::$records->total()
+            ]
+        );
     }
 
 }
