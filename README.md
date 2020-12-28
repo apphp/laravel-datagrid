@@ -53,6 +53,31 @@ $filters      = [
 ];
 ```
 
+Following filter field types are available
+
+| Type                | Description                                                                |
+|---------------------|----------------------------------------------------------------------------|
+| `string`            | Any type of strings         
+| `integer` or `int`  | Numeric integer field (HTML type="number" attribute is used)         
+| `set`               | Any type of strings         
+| `date`              | Any type of strings         
+
+
+Each filter field can include following attributes:
+
+| Attribute        | Description                                                                   |
+|------------------|-------------------------------------------------------------------------------|
+| `title`          | Specifies a title, that will be shown in the label of filter field         
+| `type`           | Specifies a type of the filter field (see above)         
+| `compareType`    | specifies which type of comparison will be used: ex.: '=', '%like%', '!=' etc.         
+| `source`         |          
+| `validation`     |          
+| `relation`       |          
+| `relationXref`   |          
+| `htmlOptions`    |          
+| `disabled`       |            
+  
+
 ### 3. Handle filters and prepare SQL builder
 ```php
 // $query = User::sortable()->orderByDesc('id');
