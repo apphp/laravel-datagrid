@@ -536,24 +536,25 @@ class Filter
         $filterFields = self::$filterFields;
         $filters = self::$filters;
 
-        $output = self::renderErrors();
+        $errors = self::renderErrors();
 
-        $output .= '
-        <div id="filter" class="card mb-3">
-            <div class="card-header">
-                <a class="pointer" onclick="$(\'#filter .card-body\').toggleClass(\'collapse\');$(this).find(\'i\').toggleClass(\'fa-minus-square\');$(\'#id\').focus()">
-                    Filter
-                    <div class="float-right">
-                        <i class="fa fa-plus-square'.(self::$mode == 'opened' || $filterFields['act'] === 'search' ? ' fa-minus-square' : '').'" aria-hidden="true"></i>
-                    </div>
-                </a>
-            </div>
-            <div class="card-body py-1'.(self::$mode == 'opened' || $filterFields['act'] === 'search' ? '' : ' collapse').'">
-                <form action="'.self::getSubmitRoute().'" method="GET">
-                    <input type="hidden" name="act" value="search">'.PHP_EOL;
+//        $output = $errors;
+//        $output .= '
+//        <div id="filter" class="card mb-3">
+//            <div class="card-header">
+//                <a class="pointer" onclick="$(\'#filter .card-body\').toggleClass(\'collapse\');$(this).find(\'i\').toggleClass(\'fa-minus-square\');$(\'#id\').focus()">
+//                    Filter
+//                    <div class="float-right">
+//                        <i class="fa fa-plus-square'.(self::$mode == 'opened' || $filterFields['act'] === 'search' ? ' fa-minus-square' : '').'" aria-hidden="true"></i>
+//                    </div>
+//                </a>
+//            </div>
+//            <div class="card-body py-1'.(self::$mode == 'opened' || $filterFields['act'] === 'search' ? '' : ' collapse').'">
+//                <form action="'.self::getSubmitRoute().'" method="GET">
+//                    <input type="hidden" name="act" value="search">'.PHP_EOL;
                     
                     $count = 0;
-                    $output .= '<div class="row mb-n2">'.PHP_EOL;
+                    $filterFieldsContent = '<div class="row mb-n2">'.PHP_EOL;
                     foreach ($filters as $key => $filter) {
 
                         // Skip act field
@@ -574,8 +575,8 @@ class Filter
 
                         // Split rows in filter after each 4 fields
                         if ($count != 0 && $count % self::$fieldsInRow == 0) {
-                            $output .= '</div>'.PHP_EOL;
-                            $output .= '<div class="row mb-n2">'.PHP_EOL;
+                            $filterFieldsContent .= '</div>'.PHP_EOL;
+                            $filterFieldsContent .= '<div class="row mb-n2">'.PHP_EOL;
                         }
 
                         $title = $filter['title'] ?? $key;
@@ -583,33 +584,33 @@ class Filter
                         $source = $filter['source'] ?? [];
                         $value = isset($filterFields[$key]) ? $filterFields[$key] : '';
 
-                        $output .= '<div class="col-md-'.(self::$fieldsInRow == 6 ? 2 : 3).'">'.PHP_EOL;
-                        $output .= '<div class="form-group">'.PHP_EOL;
-                        $output .= '<label for="'.$key.'" class="col-form-label">'.$title.'</label>'.PHP_EOL;
+                        $filterFieldsContent .= '<div class="col-md-'.(self::$fieldsInRow == 6 ? 2 : 3).'">'.PHP_EOL;
+                        $filterFieldsContent .= '<div class="form-group">'.PHP_EOL;
+                        $filterFieldsContent .= '<label for="'.$key.'" class="col-form-label">'.$title.'</label>'.PHP_EOL;
 
                         switch ($type) {
                             case 'int':
                             case 'integer':
-                                $output .= '<input type="number" min="1" id="'.$htmlOptions['id'].'" name="'.$htmlOptions['name'].'" class="'.$htmlOptions['class'].'" value="'.$value.'">'.PHP_EOL;
+                                $filterFieldsContent .= '<input type="number" min="1" id="'.$htmlOptions['id'].'" name="'.$htmlOptions['name'].'" class="'.$htmlOptions['class'].'" value="'.$value.'">'.PHP_EOL;
                                 break;
 
                             case 'date':
-                                $output .= '<input type="date" id="'.$htmlOptions['id'].'" name="'.$htmlOptions['name'].'" class="'.$htmlOptions['class'].'" value="'.$value.'">'.PHP_EOL;
+                                $filterFieldsContent .= '<input type="date" id="'.$htmlOptions['id'].'" name="'.$htmlOptions['name'].'" class="'.$htmlOptions['class'].'" value="'.$value.'">'.PHP_EOL;
                                 break;
 
                             case 'set':
                             case 'user_status':
                             case 'user_active':
-                                $output .= '<select id="'.$htmlOptions['id'].'" name="'.$htmlOptions['name'].'" class="'.$htmlOptions['class'].'">'.PHP_EOL;
-                                $output .= '<option value=""></option>'.PHP_EOL;
+                                $filterFieldsContent .= '<select id="'.$htmlOptions['id'].'" name="'.$htmlOptions['name'].'" class="'.$htmlOptions['class'].'">'.PHP_EOL;
+                                $filterFieldsContent .= '<option value=""></option>'.PHP_EOL;
                                 foreach ($source as $sourceValue => $sourceLabel) {
-                                    $output .= '<option value="'.$sourceValue.'"'.($value != '' && $sourceValue == $value ? ' selected' : '').'>'.$sourceLabel.'</option>'.PHP_EOL;
+                                    $filterFieldsContent .= '<option value="'.$sourceValue.'"'.($value != '' && $sourceValue == $value ? ' selected' : '').'>'.$sourceLabel.'</option>'.PHP_EOL;
                                 }
-                                $output .= '</select>'.PHP_EOL;
+                                $filterFieldsContent .= '</select>'.PHP_EOL;
                                 break;
 
                             case 'url_parameter':
-                                $output .= '<input type="hidden" name="'.$htmlOptions['name'].'" value="'.$value.'">'.PHP_EOL;
+                                $filterFieldsContent .= '<input type="hidden" name="'.$htmlOptions['name'].'" value="'.$value.'">'.PHP_EOL;
                                 break;
 
                             case 'user_role':
@@ -632,43 +633,54 @@ class Filter
                                     }
                                 }
 
-                                $output .= '<vue-multiselect :id="\''.$htmlOptions['id'].'\'" :options=\''.json_encode($rolesList).'\' :values=\''.json_encode($role).'\' :placeholder-text="\'Select Role\'"></vue-multiselect>'.PHP_EOL;
+                                $filterFieldsContent .= '<vue-multiselect :id="\''.$htmlOptions['id'].'\'" :options=\''.json_encode($rolesList).'\' :values=\''.json_encode($role).'\' :placeholder-text="\'Select Role\'"></vue-multiselect>'.PHP_EOL;
                                 break;
 
                             case 'string':
                             default:
-                                $output .= '<input type="text" maxlength="255" id="'.$htmlOptions['id'].'" name="'.$htmlOptions['name'].'" class="'.$htmlOptions['class'].'" value="'.$value.'" autocomplete="off" />'.PHP_EOL;
+                                $filterFieldsContent .= '<input type="text" maxlength="255" id="'.$htmlOptions['id'].'" name="'.$htmlOptions['name'].'" class="'.$htmlOptions['class'].'" value="'.$value.'" autocomplete="off" />'.PHP_EOL;
                                 break;
                         }
 
-                        $output .= '</div>'.PHP_EOL;
-                        $output .= '</div>'.PHP_EOL;
+                        $filterFieldsContent .= '</div>'.PHP_EOL;
+                        $filterFieldsContent .= '</div>'.PHP_EOL;
 
                         $count++;
                     }
-                    $output .= '</div>'.PHP_EOL;
+                    $filterFieldsContent .= '</div>'.PHP_EOL;
 
+//                    $output .= $filterFieldsContent;
+//
+//                    $output .= '<div class="row">
+//                        <div class="col">
+//                            <div class="form-group">
+//                                <div class="mt-1">
+//                                    <button type="submit" class="btn btn-primary btn-sm" name="search" data-remove-empties="true">
+//                                        <i class="fa fa-search-'.(!empty($filterFields['act']) && $filterFields['act'] === 'search' ? 'minus' : 'plus').' mr-1" aria-hidden="true"></i> Search
+//                                    </button>
+//                                    '.(!empty($filterFields['act']) && $filterFields['act'] === 'search' ? '<a class="btn btn-sm" href="'.self::getCancelRoute().'">Cancel</a>' : '').'
+//                                </div>
+//                            </div>
+//                        </div>
+//                    </div>
+//                </form>
+//            </div>
+//        </div>';
+//        return $output;
 
-                    $output .= '<div class="row">
-                        <div class="col">
-                            <div class="form-group">
-                                <div class="mt-1">
-                                    <button type="submit" class="btn btn-primary btn-sm" name="search" data-remove-empties="true">
-                                        <i class="fa fa-search-'.(!empty($filterFields['act']) && $filterFields['act'] === 'search' ? 'minus' : 'plus').' mr-1" aria-hidden="true"></i> Search
-                                    </button>
-                                    '.(!empty($filterFields['act']) && $filterFields['act'] === 'search' ? '<a class="btn btn-sm" href="'.self::getCancelRoute().'">Cancel</a>' : '').'
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                
-                </form>
-            </div>
-        </div>';
+        // ===============================
 
-        return $output;
+        return view(
+            'datagrid::filter',
+            [
+                'mode'                => self::$mode,
+                'errors'              => $errors,
+                'filterFields'        => $filterFields,
+                'filterFieldsContent' => $filterFieldsContent,
+                'submitRoute'         => self::getSubmitRoute(),
+                'cancelRoute'         => self::getCancelRoute(),
+            ]
+        );
     }
-
-
 
 }
