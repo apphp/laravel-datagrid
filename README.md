@@ -59,8 +59,8 @@ Following filter field types are available
 |---------------------|----------------------------------------------------------------------------|
 | `string`            | Any type of strings         
 | `integer` or `int`  | Numeric integer field (HTML type="number" attribute is used)         
-| `set`               | Any type of strings         
-| `date`              | Any type of strings         
+| `set`               | Set of values (array)         
+| `date`              | The datetime fields
 
 
 Each filter field can include following attributes:
@@ -69,9 +69,9 @@ Each filter field can include following attributes:
 |------------------|-------------------------------------------------------------------------------|
 | `title`          | Specifies a title, that will be shown in the label of filter field         
 | `type`           | Specifies a type of the filter field (see above)         
-| `compareType`    | specifies which type of comparison will be used: ex.: '=', '%like%', '!=' etc.         
-| `source`         |          
-| `validation`     |          
+| `compareType`    | Specifies which type of comparison will be used: ex.: '=', '%like%', '!=' etc.         
+| `source`         | Specifies the source (array) to 'set' fields         
+| `validation`     | Specifies validation rules (array). Possible options: ['minLength'=>2, 'maxLength'=>10, 'min'=>2, 'max'=>100]           
 | `relation`       |          
 | `relationXref`   |          
 | `htmlOptions`    |          
