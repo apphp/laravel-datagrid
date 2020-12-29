@@ -23,7 +23,13 @@ class Message
      */
     public static function warning(string $message = '', bool $important = true)
     {
-        return '<div class="alert alert-warning'.($important ? ' alert-important' : '').'">'.$message.'</div>';
+        return view(
+            'datagrid::message',
+            [
+                'important' => $important,
+                'message'   => $message,
+            ]
+        );
     }
 
 }

@@ -50,7 +50,7 @@ class Pagination
      *
      * @return Pagination
      */
-    public static function init($query, $pageSize = 20, $sort = '', $direction = '', $filterFields = '') : Pagination
+    public static function init($query, $pageSize = 20, $sort = '', $direction = '', $filterFields = ''): Pagination
     {
         if ( ! empty($query)) {
             self::setQuery($query);
@@ -59,13 +59,13 @@ class Pagination
             self::setPageSize($pageSize);
         }
 
-        if (! empty($filterFields)) {
+        if ( ! empty($filterFields)) {
             self::$filterFields = $filterFields;
         }
-        if (! empty($sort)) {
+        if ( ! empty($sort)) {
             self::$sort = $sort;
         }
-        if (! empty($direction)) {
+        if ( ! empty($direction)) {
             self::$direction = $direction;
         }
 
@@ -78,16 +78,18 @@ class Pagination
 
     /**
      * Set query
-     * @param string $query
+     *
+     * @param  string  $query
      * @return void
      */
-    public static function setQuery($query):void
+    public static function setQuery($query): void
     {
         self::$query = $query;
     }
 
     /**
      * Get query
+     *
      * @return string
      */
     public static function getQuery()
@@ -97,6 +99,7 @@ class Pagination
 
     /**
      * Set page size
+     *
      * @param  int  $pageSize
      * @return void
      */
@@ -107,6 +110,7 @@ class Pagination
 
     /**
      * Get page size
+     *
      * @return void
      */
     public static function getPageSize(): int
@@ -116,15 +120,17 @@ class Pagination
 
     /**
      * Get pagination fields
+     *
      * @return array
      */
-    public static function getPaginationFields():array
+    public static function getPaginationFields(): array
     {
         return self::$paginationFields;
     }
 
     /**
      * Get records
+     *
      * @return LengthAwarePaginator
      */
     public static function getRecords(): LengthAwarePaginator
@@ -141,7 +147,7 @@ class Pagination
      */
     public static function paginate($paginate = true): ?Pagination
     {
-        if (empty(self::$_instance)){
+        if (empty(self::$_instance)) {
             return null;
         }
 
@@ -156,7 +162,7 @@ class Pagination
         $maxRecordsOnPage = $records->currentPage() * $records->perPage();
 
         self::$paginationFields['fromRecord'] = $records->currentPage() > 1 ? ($records->currentPage() - 1) * $records->perPage() + 1 : 1;
-        self::$paginationFields['toRecord'] = $records->total() < $maxRecordsOnPage ? $records->total() : $maxRecordsOnPage;
+        self::$paginationFields['toRecord']   = $records->total() < $maxRecordsOnPage ? $records->total() : $maxRecordsOnPage;
 
         return self::$_instance;
     }
@@ -180,9 +186,9 @@ class Pagination
         return view(
             'datagrid::pagination',
             [
-                'links' => $links,
+                'links'            => $links,
                 'paginationFields' => self::$paginationFields,
-                'total' => self::$records->total()
+                'total'            => self::$records->total()
             ]
         );
     }
