@@ -1,4 +1,4 @@
-Version 0.4.x -
+Version 0.4.0 - Dec 30, 2020
 ----------------------------
 - Enh: code refactoring in DataGridServiceProvider
 - Enh: HTML code extracted to view blade files
