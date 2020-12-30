@@ -20,6 +20,7 @@ namespace Apphp\DataGrid;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Jenssegers\Agent\Agent;
+use Illuminate\Database\Eloquent\Builder;
 
 
 class Pagination
@@ -41,15 +42,15 @@ class Pagination
     /**
      * Pagination constructor
      *
-     * @param  Illuminate\Database\Query\Builder $query
+     * @param  Illuminate\Database\Query\Builder  $query
      * @param  int  $pageSize
-     * @param  string  $sort
-     * @param  string  $direction
-     * @param  string  $filterFields
+     * @param  string|null  $sort
+     * @param  string|null  $direction
+     * @param  array|null  $filterFields
      *
      * @return Pagination
      */
-    public static function init($query, int $pageSize = 20, string $sort = '', string $direction = '', string $filterFields = ''): Pagination
+    public static function init(Builder $query, int $pageSize = 20, ?string $sort = null, ?string $direction = '', ?array $filterFields = []): Pagination
     {
         if ( ! empty($query)) {
             self::setQuery($query);
@@ -78,10 +79,10 @@ class Pagination
     /**
      * Set query
      *
-     * @param  string  $query
+     * @param  Illuminate\Database\Query\Builder  $query
      * @return void
      */
-    public static function setQuery(string $query): void
+    public static function setQuery(Builder $query): void
     {
         self::$query = $query;
     }

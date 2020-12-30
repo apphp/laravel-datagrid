@@ -1,4 +1,4 @@
-{{ $errors }}
+{!! $errors !!}
 <div id="filter" class="card mb-3">
 	<div class="card-header">
 		<a class="pointer" onclick="$('#filter .card-body').toggleClass('collapse');$(this).find('i').toggleClass('fa-minus-square');$('#id').focus()">
@@ -12,7 +12,7 @@
 		<form action="{{$submitRoute}}" method="GET">
 			<input type="hidden" name="act" value="search">
 
-			{{ $filterFieldsContent }}
+			{!! $filterFieldsContent !!}
 
 			<div class="row">
 				<div class="col">
@@ -21,7 +21,7 @@
 							<button type="submit" class="btn btn-primary btn-sm" name="search" data-remove-empties="true">
 								<i class="fa fa-search-{{(!empty($filterFields['act']) && $filterFields['act'] === 'search' ? 'minus' : 'plus')}} mr-1" aria-hidden="true"></i> Search
 							</button>
-							{{(!empty($filterFields['act']) && $filterFields['act'] === 'search' ? '<a class="btn btn-sm" href="'.$cancelRoute.'">Cancel</a>' : '')}}
+							{!! (!empty($filterFields['act']) && $filterFields['act'] === 'search' ? '<a class="btn btn-sm" href="'.$cancelRoute.'">Cancel</a>' : '') !!}
 						</div>
 					</div>
 				</div>

@@ -1,3 +1,8 @@
+Version 0.4.1 - Dec 30, 2020
+----------------------------
+- Fix: in rendering of Filter section
+
+
 Version 0.4.0 - Dec 30, 2020
 ----------------------------
 - Enh: code refactoring in DataGridServiceProvider
