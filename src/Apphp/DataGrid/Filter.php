@@ -79,7 +79,7 @@ class Filter
     /**
      * Filter constructor
      *
-     * @param  null  $query
+     * @param  Illuminate\Database\Query\Builder $query
      * @param  Request  $request
      * @param  null  $filters
      * @param  string  $submitRoute
@@ -91,11 +91,11 @@ class Filter
     public static function init(
         $query = null,
         Request $request,
-        $filters = null,
-        $submitRoute = '',
-        $cancelRoute = '',
-        $initMode = '',
-        $fieldsInRow = 4
+        array $filters = null,
+        string $submitRoute = '',
+        string $cancelRoute = '',
+        string $initMode = '',
+        int $fieldsInRow = 4
     ): Filter
     {
         self::$debug = true;
@@ -175,7 +175,7 @@ class Filter
      * Get filter fields
      * @return array
      */
-    public static function getFilterFields():array
+    public static function getFilterFields(): array
     {
         return self::$filterFields;
     }
@@ -194,7 +194,7 @@ class Filter
      * Get submit route
      * @return string
      */
-    public static function getSubmitRoute():string
+    public static function getSubmitRoute(): string
     {
         return self::$submitRoute;
     }
@@ -223,7 +223,7 @@ class Filter
      * Get cancel route
      * @return string
      */
-    public static function getCancelRoute():string
+    public static function getCancelRoute(): string
     {
         return self::$cancelRoute;
     }
@@ -233,7 +233,7 @@ class Filter
      * @param string $mode
      * @return void
      */
-    public static function setMode($mode):void
+    public static function setMode($mode): void
     {
         self::$mode = (strtolower($mode) === 'collapsed' ? 'collapsed' : 'opened');
     }
@@ -243,7 +243,7 @@ class Filter
      * @param string $query
      * @return void
      */
-    public static function setQuery($query):void
+    public static function setQuery($query): void
     {
         self::$query = $query;
     }
@@ -424,7 +424,7 @@ class Filter
      * @param array $filter
      * @return void
      */
-    private static function prepareWhereClause($key, $value, $filter = []): void
+    private static function prepareWhereClause(string $key, $value, array $filter = []): void
     {
         $compareType = $filter['compareType'] ?? '=';
         $relation = $filter['relation'] ?? null;
@@ -460,7 +460,7 @@ class Filter
      * @param null|object $query
      * @return void
      */
-    private static function setWhereClause($key, $value, $compareType, $query = null): void
+    private static function setWhereClause(string $key, $value, string $compareType, array $query = null): void
     {
         $q = empty($query) ? self::$query : $query;
 
@@ -552,7 +552,7 @@ class Filter
 //            <div class="card-body py-1'.(self::$mode == 'opened' || $filterFields['act'] === 'search' ? '' : ' collapse').'">
 //                <form action="'.self::getSubmitRoute().'" method="GET">
 //                    <input type="hidden" name="act" value="search">'.PHP_EOL;
-                    
+
                     $count = 0;
                     $filterFieldsContent = '<div class="row mb-n2">'.PHP_EOL;
                     foreach ($filters as $key => $filter) {

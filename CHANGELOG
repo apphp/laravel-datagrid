@@ -2,6 +2,7 @@ Version 0.4.x -
 ----------------------------
 - Enh: code refactoring in DataGridServiceProvider
 - Enh: HTML code extracted to view blade files
+- Enh: min PHP version is defined as PHP 7.1
 
 
 Version 0.3.1 - Dec 26, 2020

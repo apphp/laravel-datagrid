@@ -41,8 +41,7 @@ class Pagination
     /**
      * Pagination constructor
      *
-     * @param  null  $query
-     *
+     * @param  Illuminate\Database\Query\Builder $query
      * @param  int  $pageSize
      * @param  string  $sort
      * @param  string  $direction
@@ -50,7 +49,7 @@ class Pagination
      *
      * @return Pagination
      */
-    public static function init($query, $pageSize = 20, $sort = '', $direction = '', $filterFields = ''): Pagination
+    public static function init($query, int $pageSize = 20, string $sort = '', string $direction = '', string $filterFields = ''): Pagination
     {
         if ( ! empty($query)) {
             self::setQuery($query);
@@ -82,7 +81,7 @@ class Pagination
      * @param  string  $query
      * @return void
      */
-    public static function setQuery($query): void
+    public static function setQuery(string $query): void
     {
         self::$query = $query;
     }

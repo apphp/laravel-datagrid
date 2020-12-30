@@ -8,7 +8,7 @@ This package helps to create DataGrid (CRUD) pages for Laravel 6+ framework appl
 
 ## Requirements
 
-* PHP >=7.0
+* PHP >=7.1
 * Laravel 6+
 * Bootstrap 3+
 
@@ -65,17 +65,17 @@ Following filter field types are available
 
 Each filter field can include following attributes:
 
-| Attribute        | Description                                                                   |
-|------------------|-------------------------------------------------------------------------------|
-| `title`          | Specifies a title, that will be shown in the label of filter field         
-| `type`           | Specifies a type of the filter field (see above)         
-| `compareType`    | Specifies which type of comparison will be used: ex.: '=', '%like%', '!=' etc.         
-| `source`         | Specifies the source (array) to 'set' fields         
-| `validation`     | Specifies validation rules (array). Possible options: ['minLength'=>2, 'maxLength'=>10, 'min'=>2, 'max'=>100]           
-| `relation`       |          
-| `relationXref`   |          
-| `htmlOptions`    |          
-| `disabled`       |            
+| Attribute        | Type       | Description                                                                  
+|------------------|------------|-------------------------------------------------------------------
+| `title`          | String     | Specifies a title, that will be shown in the label of filter field         
+| `type`           | String     | Specifies a type of the filter field (see above)         
+| `compareType`    | String     | Specifies which type of comparison will be used: ex.: '=', '%like%', '!=' etc.         
+| `source`         | Array      | Specifies the source (array) to 'set' fields         
+| `validation`     | Array      | Specifies validation rules (array). Possible options: ['minLength'=>2, 'maxLength'=>10, 'min'=>2, 'max'=>100]           
+| `relation`       | String     | Specifies the relation between 2 models (One-to-One, One-to-Many), ex.: search in posts for users - relation="posts"          
+| `relationXref`   | String     | Specifies the relation between 2 models (Many-to-Many), ex.: search in roles for users - relation="roles"         
+| `htmlOptions`    | Array      | Specifies any possible HTML attribute for the field          
+| `disabled`       | Boolean    | Specifies whether the field is disabled or not (default - not)           
   
 
 ### 3. Handle filters and prepare SQL builder

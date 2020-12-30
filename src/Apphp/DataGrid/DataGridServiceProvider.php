@@ -12,6 +12,11 @@ class DataGridServiceProvider extends ServiceProvider
      */
     private $dir = '';
 
+    /**
+     * DataGridServiceProvider constructor.
+     *
+     * @param $app
+     */
     public function __construct($app)
     {
         parent::__construct($app);
@@ -35,8 +40,6 @@ class DataGridServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        ///$this->app->bind();
-
         $this->app->singleton('filter', function () {
             return $this->app->make('Apphp\DataGrid\Filter');
         });
