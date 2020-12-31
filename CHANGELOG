@@ -1,3 +1,8 @@
+Version 0.4.2 - Dec 31, 2020
+----------------------------
+- Fix: wrong argument exception in Pagination class
+
+
 Version 0.4.1 - Dec 30, 2020
 ----------------------------
 - Fix: in rendering of Filter section

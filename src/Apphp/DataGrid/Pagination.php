@@ -20,7 +20,8 @@ namespace Apphp\DataGrid;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Jenssegers\Agent\Agent;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\Relation;
+use http\Exception\InvalidArgumentException;
 
 
 class Pagination
@@ -42,7 +43,7 @@ class Pagination
     /**
      * Pagination constructor
      *
-     * @param  Illuminate\Database\Query\Builder  $query
+     * @param  object $query
      * @param  int  $pageSize
      * @param  string|null  $sort
      * @param  string|null  $direction
@@ -50,8 +51,10 @@ class Pagination
      *
      * @return Pagination
      */
-    public static function init(Builder $query, int $pageSize = 20, ?string $sort = null, ?string $direction = '', ?array $filterFields = []): Pagination
+    public static function init($query, int $pageSize = 20, ?string $sort = null, ?string $direction = '', ?array $filterFields = []): Pagination
     {
+        static::guardIsRelationObject($query);
+
         if ( ! empty($query)) {
             self::setQuery($query);
         }
@@ -79,11 +82,13 @@ class Pagination
     /**
      * Set query
      *
-     * @param  Illuminate\Database\Query\Builder  $query
+     * @param  object $query
      * @return void
      */
-    public static function setQuery(Builder $query): void
+    public static function setQuery($query = null): void
     {
+        static::guardIsRelationObject($query);
+
         self::$query = $query;
     }
 
@@ -191,6 +196,17 @@ class Pagination
                 'total'            => self::$records->total()
             ]
         );
+    }
+
+    /**
+     * Guard is relation object
+     * @param  null  $query
+     */
+    protected static function guardIsRelationObject($query = null)
+    {
+        if ( ! ($query instanceof Relation)) {
+            throw new InvalidArgumentException('Wrong type of object: $query');
+        }
     }
 
 }
