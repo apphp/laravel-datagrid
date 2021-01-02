@@ -29,7 +29,7 @@ class Pagination
     private static $_instance = null;
 
     /**
-     * @var Request
+     * @var
      */
     private static $pageSize;
     private static $query;
