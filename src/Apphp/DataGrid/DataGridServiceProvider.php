@@ -32,6 +32,9 @@ class DataGridServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->loadViewsFrom($this->dir.'/../views', 'datagrid');
+
+        $this->publishViews();
+        $this->publishConfig();
     }
 
     /**
@@ -51,5 +54,31 @@ class DataGridServiceProvider extends ServiceProvider
         $this->app->singleton('message', function () {
             return $this->app->make('Apphp\DataGrid\Message');
         });
+    }
+
+    /**
+     * Publish views
+     */
+    protected function publishViews()
+    {
+        $this->publishes(
+            [
+                $this->dir.'/../views' => base_path('resources/views/vendor/datagrid')
+            ],
+            'laravel-datagrid:views'
+        );
+    }
+
+    /**
+     * Publish config
+     */
+    protected function publishConfig()
+    {
+        $this->publishes(
+            [
+                $this->dir.'/../../../config/datagrid.php' => config_path('datagrid.php')
+            ],
+            'laravel-datagrid:config'
+        );
     }
 }

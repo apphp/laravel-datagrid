@@ -617,7 +617,11 @@ class Filter
                         }
                     }
 
-                    $filterFieldsContent .= '<vue-multiselect :id="\''.$htmlOptions['id'].'\'" :options=\''.json_encode($rolesList).'\' :values=\''.json_encode($role).'\' :placeholder-text="\'Select Role\'"></vue-multiselect>'.PHP_EOL;
+                    if (config('datagrid.vueMultiselect')) {
+                        $filterFieldsContent .= '<vue-multiselect :id="\''.$htmlOptions['id'].'\'" :options=\''.json_encode($rolesList).'\' :values=\''.json_encode($role).'\' :placeholder-text="\'Select Role\'"></vue-multiselect>'.PHP_EOL;
+                    } else {
+                        $filterFieldsContent .= '';
+                    }
                     break;
 
                 case 'string':

@@ -34,6 +34,12 @@ classes based on them.
 <link rel="stylesheet" href="//getbootstrap.com/docs/4.0/dist/css/bootstrap.min.css">
 ```
 
+If you need to modify the datagrid files, you can run:
+
+```bash
+php artisan vendor:publish --provider="Apphp\DataGrid\DataGridServiceProvider"
+```
+
 ## Usage in Controllers  
 
 ### 1. Import classes
@@ -126,6 +132,22 @@ return view('backend.users.mainView', compact('users', 'filterFields', 'paginati
 
 {!! \Apphp\DataGrid\Pagination::renderLinks() !!}
 ```
+
+## Configuration
+
+To change default settings and enable some extra features you can export the config file:
+```bash
+php artisan vendor:publish --tag=laravel-datagrid:config
+```
+
+## Customize Views 
+
+To change HTML template of the datagrid or use your own, publish view file and customize it to suit your needs.
+```bash
+$ php artisan vendor:publish --tag=laravel-datagrid:views
+```
+Now you should have a datagrid.php file in the config folder of your application. If you need to force to re-publish the config file to use `--force`.
+
 
 ## Examples
 
