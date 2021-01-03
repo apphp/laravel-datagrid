@@ -2,6 +2,7 @@ Version 0.5.x -
 ----------------------------
 - New: added config file
 - New: added possibility to publish config and view files
+- New: added unit tests
 
 
 Version 0.4.2 - Dec 31, 2020

@@ -116,6 +116,7 @@ $users            = $pagination::getRecords();
 return view('backend.users.mainView', compact('users', 'filterFields', 'paginationFields'));
 ```
 
+
 ## Usage in View files 
 ```html
 <script>
@@ -133,12 +134,14 @@ return view('backend.users.mainView', compact('users', 'filterFields', 'paginati
 {!! \Apphp\DataGrid\Pagination::renderLinks() !!}
 ```
 
+
 ## Configuration
 
 To change default settings and enable some extra features you can export the config file:
 ```bash
 php artisan vendor:publish --tag=laravel-datagrid:config
 ```
+
 
 ## Customize Views 
 
@@ -148,6 +151,26 @@ $ php artisan vendor:publish --tag=laravel-datagrid:views
 ```
 Now you should have a datagrid.php file in the config folder of your application. If you need to force to re-publish the config file to use `--force`.
 
+
+## Testing 
+
+To rum unit testing simply do following:
+```bash
+./vendor/bin/phpunit vendor\\apphp\\laravel-datagrid\\tests\\TestDataGridMessage.php
+```
+
+or your may add additional section to your composer.json file:
+```json
+"scripts": {
+    "tests": "phpunit --colors=always",
+    "test": "phpunit --colors=always --filter",
+}
+```
+
+and then rum unit following command:
+```bash
+composer tests vendor\\apphp\\laravel-datagrid\\tests\\TestDataGridMessage.php
+ ```
 
 ## Examples
 

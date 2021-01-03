@@ -24,9 +24,12 @@
         "psr-0": {
             "Apphp\\DataGrid": "src/"
         },
-        "files": [
-
-        ]
+        "files": []
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Apphp\\DataGrid\\Tests\\": "tests"
+        }
     },
     "minimum-stability": "stable",
     "extra": {
