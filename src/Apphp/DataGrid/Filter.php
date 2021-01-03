@@ -58,7 +58,7 @@ use Jenssegers\Agent\Agent;
 
 class Filter
 {
-    private static $_instance = null;
+    private static $instance = null;
 
     /**
      * @var Request
@@ -125,11 +125,11 @@ class Filter
             self::setMode($initMode);
         }
 
-        if (self::$_instance === null) {
-            self::$_instance = new self;
+        if (self::$instance === null) {
+            self::$instance = new self;
         }
 
-        return self::$_instance;
+        return self::$instance;
     }
 
     /**
@@ -264,7 +264,7 @@ class Filter
      */
     public static function filter(): ?Filter
     {
-        if (empty(self::$_instance)){
+        if (empty(self::$instance)){
             return null;
         }
 
@@ -414,7 +414,7 @@ class Filter
             }
         }
 
-        return self::$_instance;
+        return self::$instance;
     }
 
     /**

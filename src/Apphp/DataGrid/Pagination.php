@@ -26,7 +26,7 @@ use http\Exception\InvalidArgumentException;
 
 class Pagination
 {
-    private static $_instance = null;
+    private static $instance = null;
 
     /**
      * @var
@@ -72,11 +72,11 @@ class Pagination
             self::$direction = $direction;
         }
 
-        if (self::$_instance === null) {
-            self::$_instance = new self;
+        if (self::$instance === null) {
+            self::$instance = new self;
         }
 
-        return self::$_instance;
+        return self::$instance;
     }
 
     /**
@@ -152,7 +152,7 @@ class Pagination
      */
     public static function paginate($paginate = true): ?Pagination
     {
-        if (empty(self::$_instance)) {
+        if (empty(self::$instance)) {
             return null;
         }
 
@@ -169,7 +169,7 @@ class Pagination
         self::$paginationFields['fromRecord'] = $records->currentPage() > 1 ? ($records->currentPage() - 1) * $records->perPage() + 1 : 1;
         self::$paginationFields['toRecord']   = $records->total() < $maxRecordsOnPage ? $records->total() : $maxRecordsOnPage;
 
-        return self::$_instance;
+        return self::$instance;
     }
 
     /**

@@ -19,7 +19,7 @@ namespace Apphp\DataGrid;
 class GridView
 {
 
-    private static $_instance = null;
+    private static $instance = null;
 
     private static $records = [];
 
@@ -33,11 +33,11 @@ class GridView
     {
         self::$records = $records;
 
-        if (self::$_instance === null) {
-            self::$_instance = new self;
+        if (self::$instance === null) {
+            self::$instance = new self;
         }
 
-        return self::$_instance;
+        return self::$instance;
     }
 
 }
