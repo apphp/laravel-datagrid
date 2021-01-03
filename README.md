@@ -198,6 +198,19 @@ public function index(Request $request)
 }
 ```
 
+### Sorting 
+
+If you use some kind of packages for column sorting, like `kyslik/column-sortable`, you have to change usage of Model to following:
+Without sorting
+```php
+$query = User::orderByDesc('id');
+```
+With column sorting
+```php
+$query = User::sortable()->orderByDesc('id');
+```
+
+
 ### Collapsed filter
 
 ![Collapsed filter](https://raw.githubusercontent.com/apphp/laravel-datagrid/master/images/filter-collapsed.png)
