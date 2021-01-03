@@ -21,7 +21,7 @@ use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Jenssegers\Agent\Agent;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use http\Exception\InvalidArgumentException;
+use Illuminate\Database\Eloquent\Builder;
 
 
 class Pagination
@@ -204,8 +204,8 @@ class Pagination
      */
     protected static function guardIsRelationObject($query = null)
     {
-        if ( ! ($query instanceof Relation)) {
-            throw new InvalidArgumentException('Wrong type of object: $query');
+        if ( ! ($query instanceof Relation || $query instanceof Builder )) {
+            throw new \InvalidArgumentException('Wrong type of object: $query');
         }
     }
 

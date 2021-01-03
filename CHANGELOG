@@ -1,3 +1,8 @@
+Version 0.5.1 - Jan 3, 2021
+----------------------------
+- Fix: error in argument validation in Pagination
+
+
 Version 0.5.0 - Jan 3, 2021
 ----------------------------
 - New: added config file
