@@ -342,9 +342,13 @@ class Filter
                         }
                         break;
                     case 'user_role':
-                        if (is_string($value) && strlen($value) < 100) {
+                        if ((is_string($value) && strlen($value) < 100) || (is_array($value) && count($value) < 500)) {
                             self::$filterFields[$key] = $value;
-                            $value = array_filter(explode(',', $value));
+
+                            if (is_string($value)) {
+                                $value = array_filter(explode(',', $value));
+                            }
+
                             $whereHasClause = 'whereHas';
                             $query = self::$query;
 
@@ -620,7 +624,13 @@ class Filter
                     if (config('datagrid.vueMultiselect')) {
                         $filterFieldsContent .= '<vue-multiselect :id="\''.$htmlOptions['id'].'\'" :options=\''.json_encode($rolesList).'\' :values=\''.json_encode($role).'\' :placeholder-text="\'Select Role\'"></vue-multiselect>'.PHP_EOL;
                     } else {
-                        $filterFieldsContent .= '';
+                        $roleValues = array_column($role, 'value');
+                        $filterFieldsContent .= '<select id="'.$htmlOptions['id'].'" name="'.$htmlOptions['id'].'[]" class="form-control form-control-sm" multiple>';
+                        foreach ($rolesList as $roleItem) {
+                            $selected = in_array($roleItem['value'], $roleValues) ? ' selected' : '';
+                            $filterFieldsContent .= '<option value="'.$roleItem['value'].'"'.$selected.'>'.$roleItem['label'].'</option>';
+                        }
+                        $filterFieldsContent .= '</select>';
                     }
                     break;
 
