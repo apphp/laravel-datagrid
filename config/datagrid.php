@@ -9,7 +9,7 @@ return [
     |
     | Specifies whether to use multiselect or not
     */
-    'vueMultiselect' => true,
+    'vueMultiselect' => false,
 
     /*
     |--------------------------------------------------------------------------
