@@ -10,11 +10,40 @@ class TestDataGridMessage extends TestCase
 {
 
     /**
-     * Test
+     * Test empty message
      */
-    public function testTest(): void
+    public function testEmptyMessage(): void
     {
-        $this->assertEquals(true, true);
+        $message = trim(Message::warning());
+        $this->assertEmpty($message);
+    }
+
+    /**
+     * Test message
+     */
+    public function testMessage(): void
+    {
+        $message = Message::warning('test');
+        $this->assertStringContainsString('test', $message);
+        $this->assertStringContainsString('alert-warning', $message);
+    }
+
+    /**
+     * Test important message
+     */
+    public function testImportantMessage(): void
+    {
+        $message = Message::warning('test');
+        $this->assertStringContainsString('alert-important', $message);
+    }
+
+    /**
+     * Test not important message
+     */
+    public function testNotImportantMessage(): void
+    {
+        $message = Message::warning('test', false);
+        $this->assertStringNotContainsString('alert-important', $message);
     }
 
 }
