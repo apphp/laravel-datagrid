@@ -1,6 +1,9 @@
 Version 0.6. -
 ----------------------------
 - New: implemented GridView basic functionality
+- New: implemented callback functionality to GridView items
+- New: implemented CSS classes for headers and rows in GridView
+- Enh: added test for DataGrid Message
 
 
 Version 0.5.2 - Jan 4, 2021

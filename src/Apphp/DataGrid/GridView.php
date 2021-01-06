@@ -48,7 +48,7 @@ class GridView
             return $output;
         }
 
-        if ( !is_array($columns) && !is_string($columns) ) {
+        if ( !empty($columns) && !is_array($columns) && !is_string($columns) ) {
             return $output;
         }
 
@@ -68,11 +68,11 @@ class GridView
         $output .= '<thead>';
         $output .= '<tr>';
         foreach ($columns as $key => $column) {
-            $title = is_array($column) ? ($column['title'] ?? '') : $column;
-            $width = is_array($column) ? ($column['width'] ? ' width="'.$column['width'].'"' : '') : '';
-            $class = is_array($column) ? ($column['headClass'] ? ' class="'.$column['headClass'].'"' : '') : '';
+            $title = !empty($column['title']) ? $column['title'] : $column;
+            $width = !empty($column['width']) ? ' width="'.$column['width'].'"' : '';
+            $class = !empty($column['headClass']) ? ' class="'.$column['headClass'].'"' : '';
 
-            $output .= '<th class="text-center"'.$width.$class.'>'.$title.'</th>';
+            $output .= '<th class=""'.$width.$class.'>'.$title.'</th>';
         }
         $output .= '</tr>';
         $output .= '</thead>';
@@ -83,8 +83,15 @@ class GridView
             $output .= '<tr>';
             foreach ($columns as $key => $column) {
                 $columnKey = is_array($column) ? $key : $column;
-                $output .= '<td>';
-                $output .= $record[$columnKey] ?? '';
+                $callback = !empty($column['callback']) ? $callback : null;
+                $class = !empty($column['class']) ? ' class="'.$column['class'].'"' : '';
+
+                $output .= '<td'.$class.'>';
+                if (!empty($column['callback'])) {
+                    $output .= $column['callback']($record);
+                } else {
+                    $output .= $record[$columnKey] ?? '';
+                }
                 $output .= '</td>';
             }
             $output .= '</tr>';
@@ -97,6 +104,4 @@ class GridView
         return $output;
     }
 
-
 };
-
