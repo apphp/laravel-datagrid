@@ -83,12 +83,12 @@ class GridView
             $output .= '<tr>';
             foreach ($columns as $key => $column) {
                 $columnKey = is_array($column) ? $key : $column;
-                $callback = !empty($column['callback']) ? $callback : null;
+                $callback = (!empty($column['callback']) && is_callable($column['callback']) || $column['callback'] instanceof Closure) ? $column['callback'] : null;
                 $class = !empty($column['class']) ? ' class="'.$column['class'].'"' : '';
 
                 $output .= '<td'.$class.'>';
-                if (!empty($column['callback'])) {
-                    $output .= $column['callback']($record);
+                if (!empty($callback)) {
+                    $output .= $callback($record);
                 } else {
                     $output .= $record[$columnKey] ?? '';
                 }
