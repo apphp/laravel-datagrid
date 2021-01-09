@@ -31,10 +31,12 @@ class DataGridServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->loadTranslationsFrom($this->dir.'/../Lang', 'datagrid');
         $this->loadViewsFrom($this->dir.'/../views', 'datagrid');
 
         $this->publishViews();
         $this->publishConfig();
+        $this->publishLang();
     }
 
     /**
@@ -79,6 +81,19 @@ class DataGridServiceProvider extends ServiceProvider
                 $this->dir.'/../../../config/datagrid.php' => config_path('datagrid.php')
             ],
             'laravel-datagrid:config'
+        );
+    }
+
+    /**
+     * Publish lang
+     */
+    protected function publishLang()
+    {
+        $this->publishes(
+            [
+                $this->dir.'/../Lang' => resource_path('lang/vendor/datagrid'),
+            ],
+            'laravel-datagrid:lang'
         );
     }
 }
