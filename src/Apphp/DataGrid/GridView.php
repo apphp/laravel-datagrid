@@ -6,10 +6,23 @@
  *  Usage:
  *
  *  // GridView
- *  GridView::init($records);
+ *  $gridView = GridView::init($records);
  *
- *  // Render links
- *  {!! Apphp\DataGrid\GridView::renderTable() !!}
+ *  // Render table with auto generated columns
+ *  {!! $gridView::renderTable() !!}
+ *
+ *  // Render table with predefined columns
+ *  {!! $gridView::renderTable([
+ *      'user_id'           => ['title' => 'ID', 'width'=>'60px', 'headClass'=>'text-right', 'class'=>'text-right'],
+ *      'username'          => ['title' => 'Username', 'width'=>'', 'headClass'=>'text-left', 'class'=>'', 'callback'=>function($user){ return '<img src="'.$user->avatar_path.'" class="w-30px mr-2" alt="" /> <a href="'.route('backend.users.show', $user).'" title="Click to edit">'.$user->username.'</a>'; }],
+ *      'name'              => ['title' => 'Name', 'width'=>'', 'headClass'=>'text-left', 'class'=>''],
+ *      'email'             => ['title' => 'Email', 'width'=>'', 'headClass'=>'text-left', 'class'=>'text-truncate px-2'],
+ *      'created_at'        => ['title' => 'Created At', 'width'=>'160px', 'headClass'=>'text-center', 'class'=>'text-center px-1'],
+ *      'last_login_at'     => ['title' => 'Last Login', 'width'=>'160px', 'headClass'=>'text-center', 'class'=>'text-center px-1'],
+ *      'newsletter'        => ['title' => '<i class="fa fa-envelope-o" aria-hidden="true" title="Subscribed to newsletter"></i>', 'width'=>'40px', 'headClass'=>'text-center', 'class'=>'text-center px-1'],
+ *      'email_verified_at' => ['title' => 'Status', 'width'=>'80px', 'headClass'=>'text-center', 'class'=>'text-center px-2', 'callback'=>function($user){ return $user->isVerified() ? '<span class="badge badge-primary">Verified</span>' : '<span class="badge badge-secondary">Waiting</span>'; }],
+ *      'active'            => ['title' => 'Active', 'width'=>'80px', 'headClass'=>'text-center', 'class'=>'text-center px-2', 'callback'=>function($user){ return $user->isActive() ? '<span class="badge badge-success">Active</span>' : '<span class="badge badge-danger">Not Active</span>'; }],
+ *  ]) !!}
  *
  */
 
@@ -40,6 +53,12 @@ class GridView
         return self::$instance;
     }
 
+    /**
+     * Render table
+     *
+     * @param  null  $columns
+     * @return string
+     */
     public static function renderTable($columns = null)
     {
         $output = '';
@@ -59,26 +78,54 @@ class GridView
                 $columns = array_combine($columns, $columns);
             }
         }
-        ///dd($columns);
 
         $output .= '<div class="table-responsive">';
         $output .= '<table class="table table-bordered table-striped">';
 
-        // Render column names
-        $output .= '<thead>';
+        // Render column headers
+        $output .= self::renderTableHeaders($columns);
+
+        // Render table rows
+        $output .= self::renderTableRows($columns);
+
+        $output .= '</table>';
+        $output .= '</div>';
+
+        return $output;
+    }
+
+    /**
+     * Render table column headers
+     *
+     * @param  array  $columns
+     * @return string
+     */
+    private static function renderTableHeaders(array $columns = []): string
+    {
+        $output = '<thead>';
         $output .= '<tr>';
         foreach ($columns as $key => $column) {
-            $title = !empty($column['title']) ? $column['title'] : $column;
-            $width = !empty($column['width']) ? ' width="'.$column['width'].'"' : '';
-            $class = !empty($column['headClass']) ? ' class="'.$column['headClass'].'"' : '';
+            $title = ! empty($column['title']) ? $column['title'] : $column;
+            $width = ! empty($column['width']) ? ' width="'.$column['width'].'"' : '';
+            $class = ! empty($column['headClass']) ? ' class="'.$column['headClass'].'"' : '';
 
-            $output .= '<th class=""'.$width.$class.'>'.$title.'</th>';
+            $output .= '<th'.$width.$class.'>'.$title.'</th>';
         }
         $output .= '</tr>';
         $output .= '</thead>';
 
-        // Render rows
-        $output .= '<tbody>';
+        return $output;
+    }
+
+    /**
+     * Render table rows
+     *
+     * @param  array  $columns
+     * @return string
+     */
+    private static function renderTableRows(array $columns = []): string
+    {
+        $output = '<tbody>';
         foreach (self::$records as $record) {
             $output .= '<tr>';
             foreach ($columns as $key => $column) {
@@ -96,12 +143,9 @@ class GridView
             }
             $output .= '</tr>';
         }
-
         $output .= '</tbody>';
-        $output .= '</table>';
-        $output .= '</div>';
 
         return $output;
     }
 
-};
+}
