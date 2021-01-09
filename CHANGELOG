@@ -3,6 +3,7 @@ Version 0.6. -
 - New: implemented GridView basic functionality
 - New: implemented callback functionality to GridView items
 - New: implemented CSS classes for headers and rows in GridView
+- New: added sorting links to table column headers
 - Enh: added test for DataGrid Message
 
 
