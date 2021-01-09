@@ -1,10 +1,11 @@
-Version 0.6. -
+Version 0.6.0 - Jan 9, 2021
 ----------------------------
 - New: implemented GridView basic functionality
 - New: implemented callback functionality to GridView items
 - New: implemented CSS classes for headers and rows in GridView
 - New: added sorting links to table column headers
 - New: added possibility to wrap table in responsive DIV
+- New: added translation files
 - Enh: added test for DataGrid Message
 
 
