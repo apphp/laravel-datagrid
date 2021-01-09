@@ -41,6 +41,9 @@ class GridView
     /* @var bool */
     private static $sortingEnabled = true;
 
+    /* @var bool */
+    private static $responsiveEnabled = true;
+
     /**
      * GridView constructor
      *
@@ -84,17 +87,14 @@ class GridView
             }
         }
 
-        $output .= '<div class="table-responsive">';
         $output .= '<table class="table table-bordered table-striped">';
-
-        // Render column headers
         $output .= self::renderTableHeaders($columns);
-
-        // Render table rows
         $output .= self::renderTableRows($columns);
-
         $output .= '</table>';
-        $output .= '</div>';
+
+        if (self::$responsiveEnabled) {
+            $output .= self::wrapResponsiveTable($output);
+        }
 
         return $output;
     }
@@ -191,5 +191,15 @@ class GridView
         }
 
         return $return;
+    }
+
+    /**
+     * Wrap table in responsive div
+     * @param  string  $content
+     * @return string
+     */
+    private function wrapResponsiveTable(string $content = ''): string
+    {
+        return '<div class="table-responsive">'.$content.'</div>';
     }
 }
