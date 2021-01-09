@@ -497,7 +497,7 @@ class Filter
         $output = '';
 
         if (self::$debug && !empty(self::$errors)) {
-            $output .= '<div class="alert alert-danger" role="alert">';
+            $output .= '<div class="alert alert-danger alert-important" role="alert">';
             $output .= '<button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>';
             $output .= '<b>Filter Errors:</b>';
             $output .= '<ul class="mb-0">';
