@@ -32,9 +32,14 @@ namespace Apphp\DataGrid;
 class GridView
 {
 
+    /* @var GridView */
     private static $instance = null;
 
+    /* @var array */
     private static $records = [];
+
+    /* @var bool */
+    private static $sortingEnabled = true;
 
     /**
      * GridView constructor
@@ -102,6 +107,14 @@ class GridView
      */
     private static function renderTableHeaders(array $columns = []): string
     {
+        $currentURL = request()->fullUrl();
+
+        $sort      = request()->get('sort');
+        $direction = strtolower(request()->get('direction'));
+
+        $currentURL = self::removeParameterFromUrl($currentURL, 'sort');
+        $currentURL = self::removeParameterFromUrl($currentURL, 'direction');
+
         $output = '<thead>';
         $output .= '<tr>';
         foreach ($columns as $key => $column) {
@@ -109,7 +122,17 @@ class GridView
             $width = ! empty($column['width']) ? ' width="'.$column['width'].'"' : '';
             $class = ! empty($column['headClass']) ? ' class="'.$column['headClass'].'"' : '';
 
-            $output .= '<th'.$width.$class.'>'.$title.'</th>';
+            $output .= '<th'.$width.$class.'>';
+            $sortDir = ($sort == $key) ? ($direction == 'asc' ? 'desc' : 'asc') : 'asc';
+            if (self::$sortingEnabled) {
+                $output .= '<a href="'.$currentURL.'&sort='.$key.'&direction='.$sortDir.'">';
+            }
+            $output .= $title;
+            if (self::$sortingEnabled) {
+                $output .= '</a>';
+                $output .= '<i class="fa fa-sort-'.$sortDir.'"></i>';
+            }
+            $output .= '</th>';
         }
         $output .= '</tr>';
         $output .= '</thead>';
@@ -148,4 +171,25 @@ class GridView
         return $output;
     }
 
+    /**
+     * Remove specific parameter from Url
+     * @param  string  $url
+     * @param  string  $key
+     * @return string
+     */
+    private function removeParameterFromUrl(string $url = '', string $key = ''): string
+    {
+        $parsed = parse_url($url);
+        $path   = $parsed['path'];
+
+        unset($_GET[$key]);
+
+        if ( ! empty(http_build_query($_GET))) {
+            $return = $path.'?'.http_build_query($_GET);
+        } else {
+            $return = $path;
+        }
+
+        return $return;
+    }
 }
