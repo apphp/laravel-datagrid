@@ -123,15 +123,19 @@ return view('backend.users.mainView', compact('users', 'filterFields', 'paginati
     {!! \Apphp\DataGrid\Filter::renderJs() !!}
 </script>
 
-{!! \Apphp\DataGrid\Filter::renderFields() !!}
+@if(count($records))
+    {!! \Apphp\DataGrid\Filter::renderFields() !!}
     
-    <!-- YOUR TABLE WITH RECORDS DATA -->
-        @foreach ($users as $user)
-    
+        <!-- YOUR TABLE WITH RECORDS DATA -->
+        @foreach ($records as $record)
+        <!-- ... -->
         @endforeach
-    <!-- YOUR TABLE WITH RECORDS DATA -->
+        <!-- YOUR TABLE WITH RECORDS DATA -->
 
-{!! \Apphp\DataGrid\Pagination::renderLinks() !!}
+    {!! \Apphp\DataGrid\Pagination::renderLinks() !!}
+@else
+    {!! \Apphp\DataGrid\Message::warning('Sorry, no records were found. Please adjust your search criteria and try again.') !!}
+@endif
 ```
 
 
@@ -231,6 +235,54 @@ $query = User::orderByDesc('id');
 With column sorting
 ```php
 $query = User::sortable()->orderByDesc('id');
+```
+
+### Table content rendering
+
+You have 2 way to render table content.
+The first is to write creating table manually in view file. Look on example below:
+
+```html
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th class="text-right" width="60px">@sortablelink('user_id', 'ID')</th>
+        ...
+    </tr>
+    </thead>
+    <tbody>
+        @foreach ($users as $user)
+            <tr>
+                <td class="text-right">{{ $user->user_id }}</td>
+                ...
+                </tr>
+            @endforeach
+    </tbody>
+    </table>
+</div>
+``` 
+
+The second way is to use <code>GridView</code> helper. Look on example below:
+```php
+// GridView - initialized in Controller
+$gridView = GridView::init($records);
+
+return view('backend.users', compact(... , 'gridView'));
+```
+
+```html
+{{-- Render table content --}}
+{!!
+    $gridView::renderTable([
+        'user_id'           => ['title' => 'ID', 'width'=>'60px', 'headClass'=>'text-right', 'class'=>'text-right'],
+        'username'          => ['title' => 'Username', 'width'=>'', 'headClass'=>'text-left', 'class'=>''],
+        'name'              => ['title' => 'Name', 'width'=>'', 'headClass'=>'text-left', 'class'=>''],
+        'email'             => ['title' => 'Email', 'width'=>'', 'headClass'=>'text-left', 'class'=>'text-truncate px-2'],
+        'created_at'        => ['title' => 'Created At', 'width'=>'160px', 'headClass'=>'text-center', 'class'=>'text-center px-1'],
+        'last_login_at'     => ['title' => 'Last Login', 'width'=>'160px', 'headClass'=>'text-center', 'class'=>'text-center px-1'],
+    ])
+!!}
 ```
 
 
