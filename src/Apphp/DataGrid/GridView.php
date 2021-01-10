@@ -13,15 +13,15 @@
  *
  *  // Render table with predefined columns
  *  {!! $gridView::renderTable([
- *      'user_id'           => ['title' => 'ID', 'width'=>'60px', 'headClass'=>'text-right', 'class'=>'text-right'],
- *      'username'          => ['title' => 'Username', 'width'=>'', 'headClass'=>'text-left', 'class'=>'', 'callback'=>function($user){ return '<img src="'.$user->avatar_path.'" class="w-30px mr-2" alt="" /> <a href="'.route('backend.users.show', $user).'" title="Click to edit">'.$user->username.'</a>'; }],
- *      'name'              => ['title' => 'Name', 'width'=>'', 'headClass'=>'text-left', 'class'=>''],
- *      'email'             => ['title' => 'Email', 'width'=>'', 'headClass'=>'text-left', 'class'=>'text-truncate px-2'],
- *      'created_at'        => ['title' => 'Created At', 'width'=>'160px', 'headClass'=>'text-center', 'class'=>'text-center px-1'],
- *      'last_login_at'     => ['title' => 'Last Login', 'width'=>'160px', 'headClass'=>'text-center', 'class'=>'text-center px-1'],
- *      'newsletter'        => ['title' => '<i class="fa fa-envelope-o" aria-hidden="true" title="Subscribed to newsletter"></i>', 'width'=>'40px', 'headClass'=>'text-center', 'class'=>'text-center px-1'],
- *      'email_verified_at' => ['title' => 'Status', 'width'=>'80px', 'headClass'=>'text-center', 'class'=>'text-center px-2', 'callback'=>function($user){ return $user->isVerified() ? '<span class="badge badge-primary">Verified</span>' : '<span class="badge badge-secondary">Waiting</span>'; }],
- *      'active'            => ['title' => 'Active', 'width'=>'80px', 'headClass'=>'text-center', 'class'=>'text-center px-2', 'callback'=>function($user){ return $user->isActive() ? '<span class="badge badge-success">Active</span>' : '<span class="badge badge-danger">Not Active</span>'; }],
+ *      'user_id'           => ['title' => 'ID', 'width'=>'60px', 'headClass'=>'text-right', 'class'=>'text-right', 'sortable'=>true],
+ *      'username'          => ['title' => 'Username', 'width'=>'', 'headClass'=>'text-left', 'class'=>'', 'sortable'=>true, 'callback'=>function($user){ return '<img src="'.$user->avatar_path.'" class="w-30px mr-2" alt="" /> <a href="'.route('backend.users.show', $user).'" title="Click to edit">'.$user->username.'</a>'; }],
+ *      'name'              => ['title' => 'Name', 'width'=>'', 'headClass'=>'text-left', 'class'=>'', 'sortable'=>true],
+ *      'email'             => ['title' => 'Email', 'width'=>'', 'headClass'=>'text-left', 'class'=>'text-truncate px-2', 'sortable'=>true],
+ *      'created_at'        => ['title' => 'Created At', 'width'=>'160px', 'headClass'=>'text-center', 'class'=>'text-center px-1', 'sortable'=>true],
+ *      'last_login_at'     => ['title' => 'Last Login', 'width'=>'160px', 'headClass'=>'text-center', 'class'=>'text-center px-1', 'sortable'=>true],
+ *      'newsletter'        => ['title' => '<i class="fa fa-envelope-o" aria-hidden="true" title="Subscribed to newsletter"></i>', 'width'=>'40px', 'headClass'=>'text-center', 'class'=>'text-center px-1', 'sortable'=>true],
+ *      'email_verified_at' => ['title' => 'Status', 'width'=>'80px', 'headClass'=>'text-center', 'class'=>'text-center px-2', 'sortable'=>false, 'callback'=>function($user){ return $user->isVerified() ? '<span class="badge badge-primary">Verified</span>' : '<span class="badge badge-secondary">Waiting</span>'; }],
+ *      'active'            => ['title' => 'Active', 'width'=>'80px', 'headClass'=>'text-center', 'class'=>'text-center px-2', 'sortable'=>false, 'callback'=>function($user){ return $user->isActive() ? '<span class="badge badge-success">Active</span>' : '<span class="badge badge-danger">Not Active</span>'; }],
  *  ]) !!}
  *
  */
@@ -121,14 +121,15 @@ class GridView
             $title = ! empty($column['title']) ? $column['title'] : $column;
             $width = ! empty($column['width']) ? ' width="'.$column['width'].'"' : '';
             $class = ! empty($column['headClass']) ? ' class="'.$column['headClass'].'"' : '';
+            $isSortable = isset($column['sortable']) ? ($column['sortable'] ? true : false) : self::$sortingEnabled;
 
             $output .= '<th'.$width.$class.'>';
             $sortDir = ($sort === $key) ? ($direction == 'asc' ? 'desc' : 'asc') : '';
-            if (self::$sortingEnabled) {
+            if (self::$sortingEnabled && $isSortable) {
                 $output .= '<a href="'.$currentURL.(strpos($currentURL, '?') === false ? '?' : '&').'sort='.$key.'&direction='.($sortDir ? $sortDir : 'asc').'">';
             }
             $output .= $title;
-            if (self::$sortingEnabled) {
+            if (self::$sortingEnabled && $isSortable) {
                 $output .= '</a>';
                 $output .= ' <i class="fa fa-sort'.($sortDir ? '-'.$sortDir : '').'"></i>';
             }
