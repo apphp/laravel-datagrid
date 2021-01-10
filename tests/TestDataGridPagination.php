@@ -18,9 +18,8 @@ class TestDataGridPagination extends TestCase
         $direction = 'asc';
         $filterFields = [];
 
-        $pagination = Pagination::init(null, 20, $sort, $direction, $filterFields);
-
-        $this->assertEmpty(null);
+        $this->expectExceptionMessage('Wrong type of object: $query');
+        Pagination::init(null, 20, $sort, $direction, $filterFields);
     }
 
     /**
@@ -32,9 +31,14 @@ class TestDataGridPagination extends TestCase
         $direction = 'asc';
         $filterFields = [];
 
-        $pagination = Pagination::init(null, 20, $sort, $direction, $filterFields);
+        $tables = \Schema::getAllTables();
+        $database = \Config::get('database.connections.mysql.database');
+        $firstTable = ($tables[0]->{'Tables_in_' . $database});
+        $query = \DB::table($firstTable);
 
-        $this->assertEmpty(null);
+        $pagination = Pagination::init($query, 20, $sort, $direction, $filterFields);
+
+        $this->assertEquals($pagination::getPageSize(), 20);
     }
 
 }

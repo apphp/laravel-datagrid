@@ -22,6 +22,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Jenssegers\Agent\Agent;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 
 
 class Pagination
@@ -204,7 +205,7 @@ class Pagination
      */
     protected static function guardIsRelationObject($query = null)
     {
-        if ( ! ($query instanceof Relation || $query instanceof Builder )) {
+        if ( ! ($query instanceof Relation || $query instanceof Builder || $query instanceof QueryBuilder)) {
             throw new \InvalidArgumentException('Wrong type of object: $query');
         }
     }
