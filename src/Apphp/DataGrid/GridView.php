@@ -123,14 +123,14 @@ class GridView
             $class = ! empty($column['headClass']) ? ' class="'.$column['headClass'].'"' : '';
 
             $output .= '<th'.$width.$class.'>';
-            $sortDir = ($sort == $key) ? ($direction == 'asc' ? 'desc' : 'asc') : 'asc';
+            $sortDir = ($sort === $key) ? ($direction == 'asc' ? 'desc' : 'asc') : '';
             if (self::$sortingEnabled) {
-                $output .= '<a href="'.$currentURL.'&sort='.$key.'&direction='.$sortDir.'">';
+                $output .= '<a href="'.$currentURL.(strpos($currentURL, '?') === false ? '?' : '&').'sort='.$key.'&direction='.($sortDir ? $sortDir : 'asc').'">';
             }
             $output .= $title;
             if (self::$sortingEnabled) {
                 $output .= '</a>';
-                $output .= '<i class="fa fa-sort-'.$sortDir.'"></i>';
+                $output .= ' <i class="fa fa-sort'.($sortDir ? '-'.$sortDir : '').'"></i>';
             }
             $output .= '</th>';
         }
@@ -153,7 +153,7 @@ class GridView
             $output .= '<tr>';
             foreach ($columns as $key => $column) {
                 $columnKey = is_array($column) ? $key : $column;
-                $callback = (!empty($column['callback']) && is_callable($column['callback']) || $column['callback'] instanceof Closure) ? $column['callback'] : null;
+                $callback = (!empty($column['callback']) && (is_callable($column['callback']) || $column['callback'] instanceof Closure)) ? $column['callback'] : null;
                 $class = !empty($column['class']) ? ' class="'.$column['class'].'"' : '';
 
                 $output .= '<td'.$class.'>';
@@ -177,7 +177,7 @@ class GridView
      * @param  string  $key
      * @return string
      */
-    private function removeParameterFromUrl(string $url = '', string $key = ''): string
+    private static function removeParameterFromUrl(string $url = '', string $key = ''): string
     {
         $parsed = parse_url($url);
         $path   = $parsed['path'];
@@ -198,7 +198,7 @@ class GridView
      * @param  string  $content
      * @return string
      */
-    private function wrapResponsiveTable(string $content = ''): string
+    private static function wrapResponsiveTable(string $content = ''): string
     {
         return '<div class="table-responsive">'.$content.'</div>';
     }
