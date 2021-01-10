@@ -2,6 +2,7 @@ Version 0.6.1 -
 ----------------------------
 - New: added possibility to specify whether column is sortable or not by 'sortable'=>true
 - Fix: in rendering sortable columns
+- Fix: in showing translation strings
 
 
 Version 0.6.0 - Jan 9, 2021
