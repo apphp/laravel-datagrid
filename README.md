@@ -264,8 +264,8 @@ The first is to write creating table manually in view file. Look on example belo
             <tr>
                 <td class="text-right">{{ $user->user_id }}</td>
                 ...
-                </tr>
-            @endforeach
+            </tr>
+        @endforeach
     </tbody>
     </table>
 </div>
@@ -283,12 +283,12 @@ return view('backend.users', compact(... , 'gridView'));
 {{-- Render table content --}}
 {!!
     $gridView::renderTable([
-        'user_id'           => ['title' => 'ID', 'width'=>'60px', 'headClass'=>'text-right', 'class'=>'text-right'],
-        'username'          => ['title' => 'Username', 'width'=>'', 'headClass'=>'text-left', 'class'=>''],
-        'name'              => ['title' => 'Name', 'width'=>'', 'headClass'=>'text-left', 'class'=>''],
-        'email'             => ['title' => 'Email', 'width'=>'', 'headClass'=>'text-left', 'class'=>'text-truncate px-2'],
-        'created_at'        => ['title' => 'Created At', 'width'=>'160px', 'headClass'=>'text-center', 'class'=>'text-center px-1'],
-        'last_login_at'     => ['title' => 'Last Login', 'width'=>'160px', 'headClass'=>'text-center', 'class'=>'text-center px-1'],
+        'user_id'           => ['title' => 'ID', 'width'=>'60px', 'headClass'=>'text-right', 'class'=>'text-right', 'sortable'=>true],
+        'username'          => ['title' => 'Username', 'width'=>'', 'headClass'=>'text-left', 'class'=>'', 'sortable'=>true],
+        'name'              => ['title' => 'Name', 'width'=>'', 'headClass'=>'text-left', 'class'=>'', 'sortable'=>true],
+        'email'             => ['title' => 'Email', 'width'=>'', 'headClass'=>'text-left', 'class'=>'text-truncate px-2', 'sortable'=>true],
+        'created_at'        => ['title' => 'Created At', 'width'=>'160px', 'headClass'=>'text-center', 'class'=>'text-center px-1', 'sortable'=>true],
+        'last_login_at'     => ['title' => 'Last Login', 'width'=>'160px', 'headClass'=>'text-center', 'class'=>'text-center px-1', 'sortable'=>false],
     ])
 !!}
 ```
