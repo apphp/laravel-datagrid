@@ -3,7 +3,7 @@
         {{$links}}
     </div>
     <div class="flex-fill text-lg-right col-12 col-lg-4">
-        Shows: {{$paginationFields['fromRecord']}} - {{$paginationFields['toRecord']}}
-        from {{$total}}
+        @lang('datagrid::pagination.shows'): {{$paginationFields['fromRecord']}} - {{$paginationFields['toRecord']}}
+        @lang('datagrid::pagination.from') {{$total}}
     </div>
 </div>

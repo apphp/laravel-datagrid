@@ -2,7 +2,7 @@
 <div id="filter" class="card mb-3">
     <div class="card-header">
         <a class="pointer" onclick="$('#filter .card-body').toggleClass('collapse');$(this).find('i').toggleClass('fa-minus-square');$('#id').focus()">
-            Filter
+            @lang('datagrid::filter.filter')
             <div class="float-right">
                 <i class="fa fa-plus-square{{($mode == 'opened' || $filterFields['act'] === 'search' ? ' fa-minus-square' : '')}}" aria-hidden="true"></i>
             </div>

@@ -147,6 +147,14 @@ php artisan vendor:publish --tag=laravel-datagrid:config
 ```
 
 
+## Localization
+
+To change or add new translation files you can export the language files:
+```bash
+php artisan vendor:publish --tag=laravel-datagrid:lang
+```
+
+
 ## Customize Views 
 
 To change HTML template of the datagrid or use your own, publish view file and customize it to suit your needs.
