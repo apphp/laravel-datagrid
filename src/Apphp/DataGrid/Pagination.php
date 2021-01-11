@@ -6,7 +6,7 @@
  *  Usage:
  *
  *  // Pagination
- *  $pagination = Pagination::init($query, 20, $sort, $direction, $filterFields)::paginate();
+ *  $pagination = Pagination::init($query, 20, $sortBy, $sortDirection, $filterFields)::paginate();
  *  $paginationFields = $pagination::getPaginationFields();
  *  $records = $pagination::getRecords();
  *
@@ -35,8 +35,8 @@ class Pagination
     private static $pageSize;
     private static $query;
 
-    private static $sort = '';
-    private static $direction = '';
+    private static $sortBy = '';
+    private static $sortDirection = '';
     private static $filterFields = [];
     private static $paginationFields = [];
     private static $records = [];
@@ -46,13 +46,13 @@ class Pagination
      *
      * @param  object $query
      * @param  int  $pageSize
-     * @param  string|null  $sort
-     * @param  string|null  $direction
+     * @param  string|null  $sortBy
+     * @param  string|null  $sortDirection
      * @param  array|null  $filterFields
      *
      * @return Pagination
      */
-    public static function init($query, int $pageSize = 20, ?string $sort = null, ?string $direction = '', ?array $filterFields = []): Pagination
+    public static function init($query, int $pageSize = 20, ?string $sortBy = null, ?string $sortDirection = '', ?array $filterFields = []): Pagination
     {
         static::guardIsRelationObject($query);
 
@@ -62,15 +62,14 @@ class Pagination
         if ( ! empty($pageSize)) {
             self::setPageSize($pageSize);
         }
-
         if ( ! empty($filterFields)) {
             self::$filterFields = $filterFields;
         }
-        if ( ! empty($sort)) {
-            self::$sort = $sort;
+        if ( ! empty($sortBy)) {
+            self::$sortBy = $sortBy;
         }
-        if ( ! empty($direction)) {
-            self::$direction = $direction;
+        if ( ! empty($sortDirection)) {
+            self::$sortDirection = $sortDirection;
         }
 
         if (self::$instance === null) {
@@ -117,11 +116,31 @@ class Pagination
     /**
      * Get page size
      *
-     * @return void
+     * @return int
      */
     public static function getPageSize(): int
     {
         return self::$pageSize;
+    }
+
+    /**
+     * Get sort by
+     *
+     * @return string
+     */
+    public static function getSortBy(): string
+    {
+        return self::$sortBy;
+    }
+
+    /**
+     * Get sort direction
+     *
+     * @return string
+     */
+    public static function getSortDirection(): string
+    {
+        return self::$sortDirection;
     }
 
     /**
@@ -132,6 +151,16 @@ class Pagination
     public static function getPaginationFields(): array
     {
         return self::$paginationFields;
+    }
+
+    /**
+     * Get filter fields
+     *
+     * @return array
+     */
+    public static function getFilterFields(): array
+    {
+        return self::$filterFields;
     }
 
     /**
@@ -181,7 +210,7 @@ class Pagination
     public static function renderLinks()
     {
         $links = self::$records->appends(
-            array_merge(array_filter(self::$filterFields), ['sort' => self::$sort, 'direction' => self::$direction])
+            array_merge(array_filter(self::$filterFields), ['sort' => self::$sortBy, 'direction' => self::$sortDirection])
         );
 
         $agent = new Agent();
