@@ -286,7 +286,7 @@ return view('backend.users', compact(... , 'gridView'));
 {{-- Render table content --}}
 {!!
     $gridView::renderTable([
-        'user_id'           => ['title' => 'ID', 'width'=>'60px', 'headClass'=>'text-right', 'class'=>'text-right', 'sortable'=>true],
+        'user_id'           => ['title' => 'ID', 'width'=>'60px', 'headClass'=>'text-right', 'class'=>'text-right', 'sortable'=>true, 'callback'=>null],
         'username'          => ['title' => 'Username', 'width'=>'', 'headClass'=>'text-left', 'class'=>'', 'sortable'=>true],
         'name'              => ['title' => 'Name', 'width'=>'', 'headClass'=>'text-left', 'class'=>'', 'sortable'=>true],
         'email'             => ['title' => 'Email', 'width'=>'', 'headClass'=>'text-left', 'class'=>'text-truncate px-2', 'sortable'=>true],
@@ -294,6 +294,24 @@ return view('backend.users', compact(... , 'gridView'));
         'last_login_at'     => ['title' => 'Last Login', 'width'=>'160px', 'headClass'=>'text-center', 'class'=>'text-center px-1', 'sortable'=>false],
     ])
 !!}
+```
+
+You may also use a `callback` attribute to customize values of the specific field. This attribute accepts a function, link to function or a closure. 
+Below you may find few examples to get a feel:
+
+Show specific badge if user has verified 
+```php
+'callback'=>function($user){ return $user->isVerified() ? '<span class="badge badge-primary">Verified</span>' : '<span class="badge badge-secondary">Waiting</span>'; }
+```
+
+Show a list of user roles, get array of roles via `$roles` parameter 
+```php
+'callback'=>function($user) use ($roles){ $output = ''; if(!count($user->roles)) $output .= '<span class="badge badge-light">User</span>'; foreach($user->roles as $role) { $output .= '<span class="badge badge-info">'.$roles[$role->name].'</span> '; } return $output; }
+```
+
+Show user's avatar with a link to edit 
+```php
+'callback'=>function($user){ return '<img src="'.$user->avatar.'" alt="avatar" /> <a href="'.route('users.show', $user).'" title="Click to edit">'.$user->username.'</a>'; }
 ```
 
 
