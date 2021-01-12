@@ -1,4 +1,4 @@
-Version 0.6.1 -
+Version 0.7.0 - Jan , 2021
 ----------------------------
 - New: added possibility to specify whether column is sortable or not by 'sortable'=>true
 - Fix: in rendering sortable columns
