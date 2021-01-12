@@ -4,6 +4,7 @@ Version 0.6.1 -
 - Fix: in rendering sortable columns
 - Fix: in showing translation strings
 - Fix: translation in all view files
+- Fix: error on using HTML code in alert messages
 
 
 Version 0.6.0 - Jan 9, 2021
