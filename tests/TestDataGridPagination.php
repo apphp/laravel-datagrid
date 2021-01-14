@@ -38,6 +38,9 @@ class TestDataGridPagination extends TestCase
 
         $pagination = Pagination::init($query, 20, $sortBy, $sortDirection, $filterFields);
 
+        // Test $pagination type
+        $this->assertTrue($pagination instanceof Pagination);
+
         // Test pagination
         $this->assertEquals($pagination::getPageSize(), 20);
         $pagination::setPageSize(10);

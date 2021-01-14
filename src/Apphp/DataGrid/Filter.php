@@ -79,9 +79,9 @@ class Filter
     /**
      * Filter constructor
      *
-     * @param  Illuminate\Database\Query\Builder $query
+     * @param  Illuminate\Database\Query\Builder  $query
      * @param  Request  $request
-     * @param  null  $filters
+     * @param  array|null  $filters
      * @param  string  $submitRoute
      * @param  string  $cancelRoute
      * @param  string  $initMode
@@ -210,6 +210,15 @@ class Filter
     }
 
     /**
+     * Get cancel route
+     * @return string
+     */
+    public static function getCancelRoute(): string
+    {
+        return self::$cancelRoute;
+    }
+
+    /**
      * Set fields in row
      * @param  int  $count
      * @return void
@@ -217,15 +226,6 @@ class Filter
     public static function setFieldsInRow(int $count = 4): void
     {
         self::$fieldsInRow = in_array($count, [4, 6]) ? $count : 4;
-    }
-
-    /**
-     * Get cancel route
-     * @return string
-     */
-    public static function getCancelRoute(): string
-    {
-        return self::$cancelRoute;
     }
 
     /**
@@ -486,7 +486,6 @@ class Filter
                 break;
         }
     }
-
 
     /**
      * Render errors
