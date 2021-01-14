@@ -87,14 +87,14 @@ class GridView
             }
         }
 
-        $output .= '<table class="table table-bordered table-striped">';
-        $output .= self::renderTableHeaders($columns);
-        $output .= self::renderTableRows($columns);
-        $output .= '</table>';
-
-        if (self::$responsiveEnabled) {
-            $output .= self::wrapResponsiveTable($output);
-        }
+        return view(
+            'datagrid::gridview',
+            [
+                'headers'    => self::renderTableHeaders($columns),
+                'rows'       => self::renderTableRows($columns),
+                'responsive' => self::$responsiveEnabled,
+            ]
+        );
 
         return $output;
     }
@@ -192,15 +192,5 @@ class GridView
         }
 
         return $return;
-    }
-
-    /**
-     * Wrap table in responsive div
-     * @param  string  $content
-     * @return string
-     */
-    private static function wrapResponsiveTable(string $content = ''): string
-    {
-        return '<div class="table-responsive">'.$content.'</div>';
     }
 }
