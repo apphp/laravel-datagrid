@@ -115,30 +115,16 @@ class GridView
         $currentURL = self::removeParameterFromUrl($currentURL, 'sort');
         $currentURL = self::removeParameterFromUrl($currentURL, 'direction');
 
-        $output = '<thead>';
-        $output .= '<tr>';
-        foreach ($columns as $key => $column) {
-            $title = ! empty($column['title']) ? $column['title'] : $column;
-            $width = ! empty($column['width']) ? ' width="'.$column['width'].'"' : '';
-            $class = ! empty($column['headClass']) ? ' class="'.$column['headClass'].'"' : '';
-            $isSortable = isset($column['sortable']) ? ($column['sortable'] ? true : false) : self::$sortingEnabled;
-
-            $output .= '<th'.$width.$class.'>';
-            $sortDir = ($sort === $key) ? ($direction == 'asc' ? 'desc' : 'asc') : '';
-            if (self::$sortingEnabled && $isSortable) {
-                $output .= '<a href="'.$currentURL.(strpos($currentURL, '?') === false ? '?' : '&').'sort='.$key.'&direction='.($sortDir ? $sortDir : 'asc').'">';
-            }
-            $output .= $title;
-            if (self::$sortingEnabled && $isSortable) {
-                $output .= '</a>';
-                $output .= ' <i class="fa fa-sort'.($sortDir ? '-'.$sortDir : '').'"></i>';
-            }
-            $output .= '</th>';
-        }
-        $output .= '</tr>';
-        $output .= '</thead>';
-
-        return $output;
+        return view(
+            'datagrid::gridview-headers',
+            [
+                'currentURL' => $currentURL,
+                'sort' => $sort,
+                'direction' => $direction,
+                'sortingEnabled' => self::$sortingEnabled,
+                'columns' => $columns,
+            ]
+        );
     }
 
     /**
@@ -149,27 +135,13 @@ class GridView
      */
     private static function renderTableRows(array $columns = []): string
     {
-        $output = '<tbody>';
-        foreach (self::$records as $record) {
-            $output .= '<tr>';
-            foreach ($columns as $key => $column) {
-                $columnKey = is_array($column) ? $key : $column;
-                $callback = (!empty($column['callback']) && (is_callable($column['callback']) || $column['callback'] instanceof Closure)) ? $column['callback'] : null;
-                $class = !empty($column['class']) ? ' class="'.$column['class'].'"' : '';
-
-                $output .= '<td'.$class.'>';
-                if (!empty($callback)) {
-                    $output .= $callback($record);
-                } else {
-                    $output .= $record[$columnKey] ?? '';
-                }
-                $output .= '</td>';
-            }
-            $output .= '</tr>';
-        }
-        $output .= '</tbody>';
-
-        return $output;
+        return view(
+            'datagrid::gridview-rows',
+            [
+                'records' => self::$records,
+                'columns' => $columns
+            ]
+        );
     }
 
     /**
