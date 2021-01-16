@@ -1,6 +1,7 @@
 Version 0.7.x -
 ----------------------------
-Enh: gridview rendering table moved to view files
+- New: added new test TestDataGridFilter
+- Enh: gridview rendering table moved to view files
 
 
 Version 0.7.0 - Jan , 2021

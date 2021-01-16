@@ -20,9 +20,9 @@ class TestDataGridFilter extends TestCase
         $submitRoute = '';
         $cancelRoute = '';
         $initMode = '';
-        $fieldsInRow = '';
+        $fieldsInRow = 4;
 
-        $this->expectExceptionMessage('Wrong type of object: $query');
+        $this->expectExceptionMessage('Missing or empty parameter : $query');
         Filter::init(null, $request, $filters, $submitRoute, $cancelRoute, $initMode, $fieldsInRow);
     }
 
@@ -32,34 +32,35 @@ class TestDataGridFilter extends TestCase
     public function testFilterArguments(): void
     {
         $request = request();
-        $filters = [];
+        $filtersInit = [];
+        $filtersFilled = ['filed1' => ['type' => 'int'], 'filed2' => ['type' => 'string']];
         $submitRoute = '';
         $cancelRoute = '';
         $initMode = '';
-        $fieldsInRow = '';
-        $query = null;
+        $fieldsInRow = 4;
 
-        $filter = Filter::init($query, $request, $filters, $submitRoute, $cancelRoute, $initMode, $fieldsInRow);
+        $tables = \Schema::getAllTables();
+        $database = \Config::get('database.connections.mysql.database');
+        $firstTable = ($tables[0]->{'Tables_in_' . $database});
+        $query = \DB::table($firstTable);
+
+        $filter = Filter::init($query, $request, $filtersInit, $submitRoute, $cancelRoute, $initMode, $fieldsInRow);
 
         // Test $filter type
         $this->assertTrue($filter instanceof Filter);
 
         // Test query
-        $this->assertEquals($filter::getQuery(), null);
-        $query = new stdClass();
-        $filter::setQuery($query);
-        $this->assertTrue($query instanceof stdClass);
+        $this->assertSame($filter::getQuery(), $query);
+
+        // Test filters
+        $this->assertSame($filtersInit, $filter->getFilters());
+        $filter->setFilters($filtersFilled);
+        $this->assertSame($filtersFilled, $filter->getFilters());
 
         // Test filter fields
-        $filters = ['filed1' => ['type' => 'int'], 'filed2' => ['type' => 'string']];
-
-        $this->assertEquals($filters, $filter->getFilters());
-        $filter->setFilters($filters);
-        $this->assertEquals($filters, $filter->getFilters());
-
-        $this->assertEquals($filters, $filter->getFilterFields());
-        $filter->setFilterFields(array_fill_keys(array_keys($filters), ''));
-        $this->assertEquals($filters, $filter->getFilterFields());
+        $this->assertSame(array_fill_keys(array_keys($filtersInit), ''), $filter->getFilterFields());
+        $filter->setFilterFields(array_fill_keys(array_keys($filtersFilled), ''));
+        $this->assertSame(array_fill_keys(array_keys($filtersFilled), ''), $filter->getFilterFields());
 
         // /isFiltered()
 

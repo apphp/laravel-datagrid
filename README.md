@@ -183,6 +183,7 @@ and then rum unit following command:
 ```bash
 composer tests vendor\\apphp\\laravel-datagrid\\tests\\TestDataGridMessage.php
 composer tests vendor\\apphp\\laravel-datagrid\\tests\\TestDataGridPagination.php
+composer tests vendor\\apphp\\laravel-datagrid\\tests\\TestDataGridFilter.php
  ```
 
 and so on...

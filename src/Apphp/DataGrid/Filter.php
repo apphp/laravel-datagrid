@@ -54,6 +54,9 @@ namespace Apphp\DataGrid;
 
 use Illuminate\Http\Request;
 use Jenssegers\Agent\Agent;
+use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 
 
 class Filter
@@ -99,14 +102,17 @@ class Filter
     ): Filter
     {
         self::$debug = true;
-
         self::$request = $request;
+
+        static::guardIsEmptyQuery($query);
+        static::guardIsRelationObject($query);
+
+        if ( ! empty($query)) {
+            self::setQuery($query);
+        }
         if ( ! empty($filters)) {
             self::setFilters($filters);
             self::setFilterFields(array_fill_keys(array_keys($filters), ''));
-        }
-        if ( ! empty($query)) {
-            self::setQuery($query);
         }
         if ( ! empty($submitRoute)) {
             self::setSubmitRoute($submitRoute);
@@ -143,10 +149,10 @@ class Filter
 
     /**
      * Set filters
-     * @param $filters
+     * @param array|null $filters
      * @return void
      */
-    public static function setFilters($filters): void
+    public static function setFilters(?array $filters = []): void
     {
         self::$filters = $filters;
     }
@@ -245,6 +251,9 @@ class Filter
      */
     public static function setQuery($query): void
     {
+        static::guardIsEmptyQuery($query);
+        static::guardIsRelationObject($query);
+
         self::$query = $query;
     }
 
@@ -659,4 +668,25 @@ class Filter
         );
     }
 
+    /**
+     * Guard is empty query
+     * @param  null  $query
+     */
+    protected static function guardIsEmptyQuery($query = null)
+    {
+        if (empty($query)) {
+            throw new \InvalidArgumentException('Missing or empty parameter : $query');
+        }
+    }
+
+    /**
+     * Guard is relation object
+     * @param  null  $query
+     */
+    protected static function guardIsRelationObject($query = null)
+    {
+        if ( ! ($query instanceof Relation || $query instanceof Builder || $query instanceof QueryBuilder)) {
+            throw new \InvalidArgumentException('Wrong type of object: $query');
+        }
+    }
 }
