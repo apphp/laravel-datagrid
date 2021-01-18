@@ -62,25 +62,51 @@ class TestDataGridFilter extends TestCase
         $filter->setFilterFields(array_fill_keys(array_keys($filtersFilled), ''));
         $this->assertSame(array_fill_keys(array_keys($filtersFilled), ''), $filter->getFilterFields());
 
-        // /isFiltered()
+        // Test is filtered
+        $this->assertFalse($filter->isFiltered());
+        $filtersFilled['act'] = 'search';
+        $filter->setFilters($filtersFilled);
+        $filter->setFilterFields(array_fill_keys(array_keys($filtersFilled), ''));
+        $this->assertTrue($filter->isFiltered());
 
-        // setSubmitRoute($route = '')
-        // getSubmitRoute()
+        // Test submit routing
+        $this->assertEquals($submitRoute, $filter->getSubmitRoute());
+        $submitRoute = 'my-submit-route';
+        $filter->setSubmitRoute($submitRoute);
+        $this->assertEquals($submitRoute, $filter->getSubmitRoute());
 
-        // setCancelRoute
-        // getCancelRoute
+        // Test cancel routing
+        $this->assertEquals($cancelRoute, $filter->getCancelRoute());
+        $cancelRoute = 'my-submit-route';
+        $filter->setCancelRoute($cancelRoute);
+        $this->assertEquals($cancelRoute, $filter->getCancelRoute());
 
-        // setFieldsInRow
+        // Test fields count in row
+        $this->assertEquals($filter->getFieldsInRow(), 4);
+        $filter->setFieldsInRow(6);
+        $this->assertEquals($filter->getFieldsInRow(), 6);
+        $filter->setFieldsInRow(5);
+        $this->assertEquals($filter->getFieldsInRow(), 4);
+        $filter->setFieldsInRow(-1);
+        $this->assertEquals($filter->getFieldsInRow(), 4);
 
-        // setMode
+        // Test mode
+        $this->assertEquals($filter->getMode(), 'opened');
+        $filter->setMode('collapsed');
+        $this->assertEquals($filter->getMode(), 'collapsed');
+        $filter->setMode('opened');
+        $this->assertEquals($filter->getMode(), 'opened');
+        $filter->setMode('no');
+        $this->assertEquals($filter->getMode(), 'opened');
 
-        // filter() !!!!!!!!!
+        // Test errors
+        $this->assertEquals($filter->renderErrors(), '');
 
-        // renderErrors()
+        // Test js rendering
+        $this->assertStringStartsWith('window.addEventListener', $filter->renderJs());
 
-        // renderJs()
-
-        // renderFields()
+        // Test fields rendering
+        $this->assertStringStartsWith('<div id="filter', $filter->renderFields());
     }
 
 }

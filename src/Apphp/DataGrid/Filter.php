@@ -144,7 +144,7 @@ class Filter
      */
     public static function isFiltered(): bool
     {
-        return !empty(self::$filterFields['act']) && self::$filterFields['act'] === 'search';
+        return !empty(self::$filters['act']) && self::$filters['act'] === 'search';
     }
 
     /**
@@ -235,6 +235,15 @@ class Filter
     }
 
     /**
+     * Get fields in row
+     * @return int
+     */
+    public static function getFieldsInRow(): int
+    {
+        return self::$fieldsInRow;
+    }
+
+    /**
      * Set mode
      * @param string $mode
      * @return void
@@ -242,6 +251,15 @@ class Filter
     public static function setMode($mode): void
     {
         self::$mode = (strtolower($mode) === 'collapsed' ? 'collapsed' : 'opened');
+    }
+
+    /**
+     * Get mode
+     * @return string
+     */
+    public static function getMode(): string
+    {
+        return self::$mode;
     }
 
     /**
