@@ -1,6 +1,7 @@
 Version 0.7.x -
 ----------------------------
 - New: added new test TestDataGridFilter
+- New: added new test TestDataGridView
 - Enh: gridview rendering table moved to view files
 
 

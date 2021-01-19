@@ -62,6 +62,15 @@ class GridView
     }
 
     /**
+     * Get records
+     * @return array
+     */
+    public static function getRecords()
+    {
+        return self::$records;
+    }
+
+    /**
      * Render table
      *
      * @param  null  $columns

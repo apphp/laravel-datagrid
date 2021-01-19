@@ -14,13 +14,18 @@ class TestDataGridView extends TestCase
      */
     public function testGridViewEmpty(): void
     {
-        //$sortBy = 'user';
-        //$sortDirection = 'asc';
-        //$filterFields = [];
+        GridView::init([]);
+        $this->assertEquals(GridView::getRecords(), []);
+    }
 
-        //$this->expectExceptionMessage('Wrong type of object: $query');
-        //GridView::init(null, 20, $sortBy, $sortDirection, $filterFields);
-        $this->assertTrue(true);
+    /**
+     * Test datagrid view
+     */
+    public function testGridViewNotEmpty(): void
+    {
+        $params = ['a' => 1, 'b' => 2];
+        GridView::init($params);
+        $this->assertSame(GridView::getRecords(), $params);
     }
 
 }
