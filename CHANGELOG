@@ -1,11 +1,11 @@
-Version 0.7.x -
+Version 1.0.0 - Jan 23, 2021
 ----------------------------
 - New: added new test TestDataGridFilter
 - New: added new test TestDataGridView
 - Enh: gridview rendering table moved to view files
 
 
-Version 0.7.0 - Jan , 2021
+Version 0.7.0 - Jan 12, 2021
 ----------------------------
 - New: added possibility to specify whether column is sortable or not by 'sortable'=>true
 - Fix: in rendering sortable columns
