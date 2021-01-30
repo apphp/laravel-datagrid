@@ -104,8 +104,6 @@ class GridView
                 'responsive' => self::$responsiveEnabled,
             ]
         );
-
-        return $output;
     }
 
     /**

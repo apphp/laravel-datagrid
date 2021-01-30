@@ -91,6 +91,7 @@ $query = User::orderByDesc('id');
 $request = request(); // or get it via function param, like foo(Request $request){...}
 $url = route('backend.users.submitRote');
 $cancelUrl = $url;
+$filters = [];
 
 $filter       = Filter::init($query, $request, $filters, $url, $cancelUrl, 'collapsed');
 $filter       = $filter::filter();
@@ -280,7 +281,7 @@ The second way is to use <code>GridView</code> helper. Look on example below:
 // GridView - initialized in Controller
 $gridView = GridView::init($records);
 
-return view('backend.users', compact(... , 'gridView'));
+return view('backend.users', compact(..., 'gridView'));
 ```
 
 ```html

@@ -3,10 +3,18 @@
 namespace Apphp\DataGrid;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Contracts\Foundation\Application;
 
 
 class DataGridServiceProvider extends ServiceProvider
 {
+    /**
+     * The application instance.
+     *
+     * @var Application
+     */
+    protected $app;
+
     /**
      * @var string
      */

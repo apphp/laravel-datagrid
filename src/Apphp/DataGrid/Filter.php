@@ -69,7 +69,7 @@ class Filter
     private static $request = null;
     private static $filters = [];
     private static $filterFields = [];
-    private static $query = '';
+    private static $query = null;
     private static $submitRoute = '';
     private static $cancelRoute = '';
     private static $fieldsInRow = 4;
@@ -92,7 +92,7 @@ class Filter
      * @return Filter
      */
     public static function init(
-        $query = null,
+        $query,
         Request $request,
         array $filters = null,
         string $submitRoute = '',
@@ -485,13 +485,14 @@ class Filter
 
     /**
      * Set where clause for SQL
-     * @param string $key
-     * @param mixed $value
-     * @param string $compareType
-     * @param null|object $query
+     *
+     * @param  string  $key
+     * @param  mixed  $value
+     * @param  string  $compareType
+     * @param  object  $query
      * @return void
      */
-    private static function setWhereClause(string $key, $value, string $compareType, array $query = null): void
+    private static function setWhereClause(string $key, string $value, string $compareType, object $query = null): void
     {
         $q = empty($query) ? self::$query : $query;
 

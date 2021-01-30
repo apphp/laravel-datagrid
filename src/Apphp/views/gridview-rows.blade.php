@@ -3,6 +3,7 @@
 <tr>
     @foreach ($columns as $key => $column)
         @php
+            /** @var array $column */
             $columnKey = is_array($column) ? $key : $column;
             $callback = (!empty($column['callback']) && (is_callable($column['callback']) || $column['callback'] instanceof Closure)) ? $column['callback'] : null;
             $class = !empty($column['class']) ? ' class="'.$column['class'].'"' : '';

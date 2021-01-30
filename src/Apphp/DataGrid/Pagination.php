@@ -166,9 +166,9 @@ class Pagination
     /**
      * Get records
      *
-     * @return LengthAwarePaginator
+     * @return array
      */
-    public static function getRecords(): LengthAwarePaginator
+    public static function getRecords()
     {
         return self::$records;
     }

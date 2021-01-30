@@ -1,3 +1,8 @@
+Version 1.1.x -
+----------------------------
+- Fix: code cleanup
+
+
 Version 1.0.0 - Jan 23, 2021
 ----------------------------
 - New: added new test TestDataGridFilter

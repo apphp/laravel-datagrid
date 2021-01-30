@@ -5,7 +5,10 @@
         $title = ! empty($column['title']) ? $column['title'] : $column;
         $width = ! empty($column['width']) ? ' width="'.$column['width'].'"' : '';
         $class = ! empty($column['headClass']) ? ' class="'.$column['headClass'].'"' : '';
+        /** @var bool $sortingEnabled */
         $isSortable = isset($column['sortable']) ? ($column['sortable'] ? true : false) : $sortingEnabled;
+        /** @var string $sort */
+        /** @var string $direction */
         $sortDir = ($sort === $key) ? ($direction == 'asc' ? 'desc' : 'asc') : '';
     @endphp
 
