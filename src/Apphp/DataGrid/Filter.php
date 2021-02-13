@@ -365,7 +365,7 @@ class Filter
                         if (is_string($value) && $value == $defaultValue) {
                             self::$filterFields[$key] = $value;
                         } elseif (self::$debug){
-                            self::$errors[] = 'The field <b>'.$fieldTitle.'</b> must be equal to '.$defaultValue.'.';
+                            self::$errors[] = 'The field <b>'.$fieldTitle.'</b> must be equal to URL: '.$defaultValue.'.';
                         }
                         break;
                     case 'user_role':
